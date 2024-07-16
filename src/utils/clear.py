@@ -1,6 +1,4 @@
 import bpy
-import random
-import math
 
 
 def purge_orphans():
@@ -45,16 +43,3 @@ def clean_scene():
 
     purge_orphans()
 
-
-#bpy.ops.scene.delete()
-#bpy.ops.scene.new(type=‘NEW’)
-
-#path = 'D:/DeepFashion/1-1/model_cleaned.obj'
-#imported_object = bpy.ops.wm.obj_import(filepath=path)
-#obj_object = bpy.context.selected_objects[0]
-#print('Imported name: ', obj_object.name)
-
-# def main():
-#     return
-
-# if 
