@@ -6,7 +6,7 @@ Python script to generate train and test set to train NeRF.
 ```pip install -r requirements.txt```
 
 start:
-```add Blender Development plaguin to VSCode```
+```add Blender Development plugin to VSCode```
 ```Ctrl+Shift+P```
 ```Blender: Start```
 ```Blender: Run Script```
