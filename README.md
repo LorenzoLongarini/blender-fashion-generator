@@ -9,4 +9,6 @@ start:
 ```add Blender Development plugin to VSCode```
 ```Ctrl+Shift+P```
 ```Blender: Start```
+```move to main.py```
+```Ctrl+Shift+P```
 ```Blender: Run Script```

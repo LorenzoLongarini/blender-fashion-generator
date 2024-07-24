@@ -8,11 +8,11 @@ def import_obj():
     print('Imported name: ', obj.name)
     return obj
    
-def rotate_obj(obj):
+def rotate_obj(obj, frame):
     obj.rotation_euler = [0, 0, 0]
     obj.keyframe_insert(data_path = 'rotation_euler', frame = 1)
-    obj.rotation_euler = [0, 0, radians(45)]
-    obj.keyframe_insert(data_path = 'rotation_euler', frame = 50)
+    obj.rotation_euler = [radians(45), radians(45), radians(45)]
+    obj.keyframe_insert(data_path = 'rotation_euler', frame = frame)
 
 
 def add_texture(obj):
@@ -32,7 +32,7 @@ def add_texture(obj):
         obj.data.materials.append(mat)
 
 
-def set_object():
+def set_object(frame):
     obj = import_obj()
     add_texture(obj)
-    rotate_obj(obj)
+    rotate_obj(obj, frame)
