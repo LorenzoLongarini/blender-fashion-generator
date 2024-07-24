@@ -1,14 +1,17 @@
 import bpy
+# import time
 import sys
-sys.path.append('..src/utils')
+sys.path.append('./src/scene')
+# from src.utils import clear, import_obj, texture, cameras
 from clear import clean_scene
-from import_obj import import_obj
-from add_texture import add_texture
+from object import set_object
+from cameras import create_camera
 
 clean_scene()
 
-import_obj()
+create_camera()
 
-add_texture()
+set_object()
+
 
 
