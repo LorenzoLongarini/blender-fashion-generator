@@ -1,4 +1,5 @@
 venv
-.vscode/task.json
+.vscode/*
+!.vscode/.gitkeep
 assets/*
 !assets/.gitkeep
