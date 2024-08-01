@@ -35,9 +35,28 @@ def main():
     context = bpy.context
     train_test_cameras_op.execute(context)
 
-register()
-main()
+import os
+cwd = os.getcwd()
+output_path = cwd + '/assets/output'
+print(output_path)
+
+def initialize_scene_properties(scene):
+    scene.aabb = 2  # esempio di valore, assicurati che sia una potenza di due se necessario
+    scene.nerf = False  # oppure True, a seconda di ciò che ti serve
+    scene.train_data = True
+    scene.test_data = True
+    scene.ttc_dataset_name = "Example Dataset"
+    scene.save_path = output_path
+    # scene.blendernerf_version = "1.0"  # o qualsiasi altra versione
+    scene.render_frames = True
+    scene.ttc_nb_frames = 75
+    scene.frame_start = 1
+    scene.frame_end = 250
+
 unregister()
+register()
+initialize_scene_properties(bpy.context.scene)
+main()
 
 
 

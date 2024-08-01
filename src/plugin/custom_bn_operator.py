@@ -10,6 +10,10 @@ OUTPUT_TRAIN = 'train'
 OUTPUT_TEST = 'test'
 CAMERA_NAME = 'BlenderNeRF Camera'
 
+import os
+cwd = os.getcwd()
+output_path = cwd + '/assets/output'
+print(output_path)
 
 # blender nerf operator parent class
 class BlenderNeRF_Operator(bpy.types.Operator):
@@ -158,7 +162,7 @@ class BlenderNeRF_Operator(bpy.types.Operator):
             'AABB': scene.aabb,
             'Render Frames': scene.render_frames,
             'File Format': 'NeRF' if scene.nerf else 'NGP',
-            'Save Path': scene.save_path,
+            'Save Path': output_path,# scene.save_path,
             'Method': 'TTC'
         }
 

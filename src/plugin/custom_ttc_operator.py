@@ -4,7 +4,10 @@ import bpy
 import sys
 sys.path.append('./src/plugin')
 from custom_bn_operator import BlenderNeRF_Operator
-
+import os
+cwd = os.getcwd()
+save_path = cwd + "/assets/output"
+print(save_path)
 # from . import custom_bn_operator
 
 
@@ -28,7 +31,7 @@ class TrainTestCameras(BlenderNeRF_Operator):
             return {'FINISHED'}
 
         # if there is an error, print first error message
-        error_messages = self.asserts(scene, method='TTC')
+        error_messages = self.asserts(scene)
         if len(error_messages) > 0:
            self.report({'ERROR'}, error_messages[0])
            print({'ERROR'}, error_messages[0])
@@ -39,10 +42,10 @@ class TrainTestCameras(BlenderNeRF_Operator):
 
         # clean directory name (unsupported characters replaced) and output path
         output_dir = bpy.path.clean_name(scene.ttc_dataset_name)
-        output_path = '../assets/output'#os.path.join(scene.save_path, output_dir)
+        output_path = save_path#'../assets/output'#os.path.join(scene.save_path, output_dir)
         os.makedirs(output_path, exist_ok=True)
 
-        if scene.logs: self.save_log_file(scene, output_path, method='TTC')
+        if scene.logs: self.save_log_file(scene, output_path)
 
         # initial properties might have changed since set_init_props update
         scene.init_output_path = scene.render.filepath
@@ -50,12 +53,12 @@ class TrainTestCameras(BlenderNeRF_Operator):
 
         if scene.test_data:
             # testing transforms
-            output_test_data['frames'] = self.get_camera_extrinsics(scene, test_camera, mode='TEST', method='TTC')
+            output_test_data['frames'] = self.get_camera_extrinsics(scene, test_camera, mode='TEST')
             self.save_json(output_path, 'transforms_test.json', output_test_data)
 
         if scene.train_data:
             # training transforms
-            output_train_data['frames'] = self.get_camera_extrinsics(scene, train_camera, mode='TRAIN', method='TTC')
+            output_train_data['frames'] = self.get_camera_extrinsics(scene, train_camera, mode='TRAIN')
             self.save_json(output_path, 'transforms_train.json', output_train_data)
 
             # rendering
