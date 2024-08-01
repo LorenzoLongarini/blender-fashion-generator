@@ -13,7 +13,8 @@ CAMERA_NAME = 'BlenderNeRF Camera'
 
 # blender nerf operator parent class
 class BlenderNeRF_Operator(bpy.types.Operator):
-
+    bl_idname = "object.blender_nerf_operator"
+    bl_label = "BlenderNeRF Operator"
     # camera intrinsics
     def get_camera_intrinsics(self, scene, camera):
         camera_angle_x = camera.data.angle_x

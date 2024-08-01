@@ -1,11 +1,15 @@
 import os
 import shutil
 import bpy
-from . import blender_nerf_operator
+import sys
+sys.path.append('./src/plugin')
+from custom_bn_operator import BlenderNeRF_Operator
+
+# from . import custom_bn_operator
 
 
 # train and test cameras operator class
-class TrainTestCameras(blender_nerf_operator.BlenderNeRF_Operator):
+class TrainTestCameras(BlenderNeRF_Operator):
     '''Train and Test Cameras Operator'''
     bl_idname = 'object.train_test_cameras'
     bl_label = 'Train and Test Cameras TTC'
@@ -13,7 +17,9 @@ class TrainTestCameras(blender_nerf_operator.BlenderNeRF_Operator):
     def execute(self, context):
         scene = context.scene
         train_camera = scene.camera_train_target
+        print(train_camera)
         test_camera = scene.camera_test_target
+        print(test_camera)
 
         # check if cameras are selected : next errors depend on existing cameras
         if train_camera == None or test_camera == None:
@@ -33,7 +39,7 @@ class TrainTestCameras(blender_nerf_operator.BlenderNeRF_Operator):
 
         # clean directory name (unsupported characters replaced) and output path
         output_dir = bpy.path.clean_name(scene.ttc_dataset_name)
-        output_path = os.path.join(scene.save_path, output_dir)
+        output_path = '../assets/output'#os.path.join(scene.save_path, output_dir)
         os.makedirs(output_path, exist_ok=True)
 
         if scene.logs: self.save_log_file(scene, output_path, method='TTC')

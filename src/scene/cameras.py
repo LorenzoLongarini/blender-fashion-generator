@@ -26,3 +26,17 @@ def create_camera():
     cam_obj2.location = (1.69, 1.85, 1.388)
     cam_obj2.rotation_euler = (radians(40.6), radians(-5.5), radians(140))
     scn.collection.objects.link(cam_obj2)
+
+     # Deselect all objects first
+    bpy.ops.object.select_all(action='DESELECT')
+    
+    # Seleziona entrambe le telecamere
+    cam_obj1.select_set(True)
+    cam_obj2.select_set(True)
+
+    # Imposta la prima telecamera come attiva (opzionale)
+    # scn.camera = cam_obj1
+
+    # Imposta le telecamere nella scena come train e test
+    scn.camera_train_target = cam_obj1
+    scn.camera_test_target = cam_obj2
