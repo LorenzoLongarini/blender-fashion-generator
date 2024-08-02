@@ -1,3 +1,5 @@
+# ref: https://github.com/maximeraafat/BlenderNeRF/blob/main/ttc_operator.py
+
 import os
 import shutil
 import bpy

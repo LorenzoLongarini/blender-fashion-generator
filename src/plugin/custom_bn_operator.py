@@ -12,7 +12,7 @@ CAMERA_NAME = 'BlenderNeRF Camera'
 
 import os
 cwd = os.getcwd()
-output_path = cwd + '/assets/output'
+output_path = cwd + '/assets/output/'
 print(output_path)
 
 # blender nerf operator parent class
@@ -145,6 +145,9 @@ class BlenderNeRF_Operator(bpy.types.Operator):
 
         if not scene.nerf and not self.is_power_of_two(scene.aabb):
             error_messages.append('AABB scale needs to be a power of two!')
+
+        if scene.save_path == '':
+            scene.save_path =  output_path
 
         if scene.save_path == '':
             error_messages.append('Save path cannot be empty!')

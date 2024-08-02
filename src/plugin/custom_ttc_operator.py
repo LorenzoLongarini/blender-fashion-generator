@@ -2,13 +2,11 @@ import os
 import shutil
 import bpy
 import sys
+import os
+
 sys.path.append('./src/plugin')
 from custom_bn_operator import BlenderNeRF_Operator
-import os
-cwd = os.getcwd()
-save_path = cwd + "/assets/output"
-print(save_path)
-# from . import custom_bn_operator
+
 
 
 # train and test cameras operator class
@@ -20,9 +18,7 @@ class TrainTestCameras(BlenderNeRF_Operator):
     def execute(self, context):
         scene = context.scene
         train_camera = scene.camera_train_target
-        print(train_camera)
         test_camera = scene.camera_test_target
-        print(test_camera)
 
         # check if cameras are selected : next errors depend on existing cameras
         if train_camera == None or test_camera == None:
@@ -42,7 +38,7 @@ class TrainTestCameras(BlenderNeRF_Operator):
 
         # clean directory name (unsupported characters replaced) and output path
         output_dir = bpy.path.clean_name(scene.ttc_dataset_name)
-        output_path = save_path#'../assets/output'#os.path.join(scene.save_path, output_dir)
+        output_path = os.path.join(scene.save_path, output_dir) #'../assets/output'#os.path.join(scene.save_path, output_dir)
         os.makedirs(output_path, exist_ok=True)
 
         if scene.logs: self.save_log_file(scene, output_path)
@@ -72,8 +68,10 @@ class TrainTestCameras(BlenderNeRF_Operator):
 
         # if frames are rendered, the below code is executed by the handler function
         if not any(scene.rendering):
+            output_path = output_path + '/train'
+            zip_file_path = output_path + '.zip'
             # compress dataset and remove folder (only keep zip)
-            shutil.make_archive(output_path, 'zip', output_path) # output filename = output_path
+            shutil.make_archive(output_path, 'zip', output_path) 
             shutil.rmtree(output_path)
 
         return {'FINISHED'}
