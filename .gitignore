@@ -2,3 +2,4 @@
 .vscode/task.json
 assets/*
 !assets/.gitkeep
+.python-version
