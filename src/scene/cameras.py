@@ -4,10 +4,6 @@ from math import radians
 def create_camera(target_obj):
     scn = bpy.context.scene
 
-    # Verifica se target_obj è valido
-    if target_obj is None or not isinstance(target_obj, bpy.types.Object):
-        raise ValueError("L'oggetto target non è valido o non è un oggetto Blender.")
-
     # Distanza fissa dalle camere al centro dell'oggetto
     distance = 5  # Regola questa distanza per una visione migliore dell'oggetto
 
