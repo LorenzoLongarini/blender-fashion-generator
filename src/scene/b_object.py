@@ -2,7 +2,8 @@ import bpy
 from bpy import context
 from math import radians
 def import_obj():
-    filepath = 'D:/DeepFashion/1-1/model_cleaned.obj'
+    # filepath = 'D:/DeepFashion/1-1/model_cleaned.obj'
+    filepath = '/Users/alerong/Downloads/Computer Graphics/Dataset/filtered_registered_mesh-001/1-1'
     bpy.ops.wm.obj_import(filepath=filepath)
     obj = bpy.context.selected_objects[0]
     print('Imported name: ', obj.name)
@@ -20,7 +21,7 @@ def add_texture(obj):
     mat.use_nodes = True
     bsdf = mat.node_tree.nodes["Principled BSDF"]
     texImage = mat.node_tree.nodes.new('ShaderNodeTexImage')
-    texImage.image = bpy.data.images.load("D:/DeepFashion/1-1/1-1_tex.png")
+    texImage.image = bpy.data.images.load("/Users/alerong/Downloads/Computer Graphics/Dataset/filtered_registered_mesh-001/1-1/1-1_tex.png")
     mat.node_tree.links.new(bsdf.inputs['Base Color'], texImage.outputs['Color'])
 
     # ob = context.view_layer.objects.active
