@@ -3,9 +3,10 @@ from bpy import context
 from math import radians
 import os  
     
-cwd = os.getcwd()
+# cwd = os.getcwd()
 
-def import_obj(filepath = cwd + '/assets/DeepFashion/1-1/model_cleaned.obj'):
+# def import_obj(filepath = cwd + '/assets/DeepFashion/1-1/model_cleaned.obj'):
+def import_obj(filepath = '/Users/alerong/Downloads/Computer Graphics/Dataset/filtered_registered_mesh-001/1-1/model_cleaned.obj'):
     # Verifica se il file esiste
     if not os.path.exists(filepath):
         raise FileNotFoundError(f"Il file .obj non esiste: {filepath}")
@@ -22,7 +23,8 @@ def rotate_obj(obj, frame):
     obj.rotation_euler = [radians(45), radians(45), radians(45)]
     obj.keyframe_insert(data_path = 'rotation_euler', frame = frame)
 
-def add_texture(obj, filepath =  cwd + '/assets/DeepFashion/1-1/'):
+# def add_texture(obj, filepath =  cwd + '/assets/DeepFashion/1-1/'):
+def add_texture(obj, filepath =  '/Users/alerong/Downloads/Computer Graphics/Dataset/filtered_registered_mesh-001/1-1'):
     texture = ''
     for file in os.listdir(filepath):
         if file.endswith('.png'):
