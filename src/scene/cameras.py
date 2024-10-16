@@ -1,58 +1,47 @@
 import bpy
 from math import radians
 
-def calculate_distance_for_camera(obj, camera_fov=50):
-    """Calcola la distanza ottimale per la telecamera in base al bounding box dell'oggetto."""
-    # Ottieni il bounding box dell'oggetto
-    bbox_corners = [obj.matrix_world @ corner for corner in obj.bound_box]
-    
-    # Trova le dimensioni massime dell'oggetto
-    max_dimension = max((bbox_corners[0] - bbox_corners[6]).length, (bbox_corners[1] - bbox_corners[7]).length)
-    
-    # Converti l'angolo di visuale (fov) in radianti e calcola la distanza ideale
-    fov_radians = radians(camera_fov)
-    distance = (max_dimension / 2) / (radians(fov_radians / 2))
-
-    return distance
-
 def create_camera(target_obj):
     scn = bpy.context.scene
 
-    # Calcola la distanza dinamica basata sull'oggetto
-    distance = calculate_distance_for_camera(target_obj)
+    # Distanza fissa dalle camere al centro dell'oggetto
+    distance = 5  # Regola questa distanza per una visione migliore dell'oggetto
 
-    # create the first camera
+    # Crea la prima telecamera
     cam1 = bpy.data.cameras.new("Camera 1")
-    cam1.lens = 35  # Questa può essere regolata dinamicamente, ma iniziamo con 35 mm
+    cam1.lens = 35  # Lunghezza focale standard
 
-    # create the first camera object
+    # Crea il primo oggetto telecamera
     cam_obj1 = bpy.data.objects.new("Camera 1", cam1)
     
-    # Posiziona la camera a distanza calcolata dall'oggetto
-    cam_obj1.location = (distance, -distance, distance / 2)
-    cam_obj1.rotation_euler = (radians(45), 0, radians(45))  # Ruota la camera verso l'oggetto
+    # Posiziona la telecamera fissa a una distanza fissa
+    cam_obj1.location = (distance, -distance, distance / 2)  # Camera frontale
+    cam_obj1.rotation_euler = (radians(45), 0, radians(45))  # Inclinazione della telecamera
     scn.collection.objects.link(cam_obj1)
 
-    # Fai puntare la telecamera all'oggetto
+    # Fai puntare la telecamera al centro dell'oggetto
     cam_obj1.constraints.new(type='TRACK_TO')
     cam_obj1.constraints['Track To'].target = target_obj
-    cam_obj1.constraints['Track To'].track_axis = 'TRACK_NEGATIVE_Z'
-    cam_obj1.constraints['Track To'].up_axis = 'UP_Y'
+    cam_obj1.constraints['Track To'].track_axis = 'TRACK_NEGATIVE_Z'  # La camera guarda verso -Z
+    cam_obj1.constraints['Track To'].up_axis = 'UP_Y'  # Asse positivo Y verso l'alto
 
-    # create the second camera
+    # Crea la seconda telecamera
     cam2 = bpy.data.cameras.new("Camera 2")
-    cam2.lens = 35  # Anche qui, se vuoi, può essere regolata dinamicamente
+    cam2.lens = 35  # Lunghezza focale standard
 
-    # create the second camera object
+    # Crea il secondo oggetto telecamera
     cam_obj2 = bpy.data.objects.new("Camera 2", cam2)
     
-    # Posiziona la seconda camera dall'altro lato
-    cam_obj2.location = (-distance, distance, distance / 2)
-    cam_obj2.rotation_euler = (radians(45), 0, radians(-45))  # Ruota la camera verso l'oggetto
+    # Posiziona la seconda telecamera dall'altro lato, simmetrica alla prima
+    cam_obj2.location = (-distance, distance, distance / 2)  # Camera posteriore
+    cam_obj2.rotation_euler = (radians(45), 0, radians(-45))  # Inclinazione opposta rispetto alla prima
     scn.collection.objects.link(cam_obj2)
 
-    # Fai puntare la seconda camera all'oggetto
+    # Fai puntare la seconda telecamera al centro dell'oggetto
     cam_obj2.constraints.new(type='TRACK_TO')
     cam_obj2.constraints['Track To'].target = target_obj
     cam_obj2.constraints['Track To'].track_axis = 'TRACK_NEGATIVE_Z'
     cam_obj2.constraints['Track To'].up_axis = 'UP_Y'
+
+    # Imposta la prima telecamera come attiva
+    scn.camera = cam_obj1  # Se vuoi usare la seconda, puoi impostare cam_obj2

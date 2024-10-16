@@ -41,8 +41,7 @@ def main():
     set_lights()
 
 def initialize_scene_properties(scene):
-    # output_path = os.getcwd() + '/assets/output/'
-    output_path = '/Users/alerong/Downloads/Computer Graphics/output'
+    output_path = os.getcwd() + '/assets/output/'
     if not os.path.exists(output_path):
         os.makedirs(output_path)
 
