@@ -70,5 +70,3 @@ initialize_scene_properties(bpy.context.scene)
 unregister()
 register()
 main()
-
-set_ambient_light()
