@@ -2,13 +2,14 @@
 
 import bpy
 import sys
+# Import functions from the required modules
+
 sys.path.append('./src/scene')
+
+from cameras import create_camera
+from b_object import set_object
 from lights import set_ambient_light
 from clear import clean_scene
-from b_object import set_object
-from cameras import create_camera
-
-
 
 
 FRAMES = [75, 135, 200]
