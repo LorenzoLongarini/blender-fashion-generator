@@ -1,11 +1,16 @@
 import os
 import shutil
 import bpy
-from . import blender_nerf_operator
+import sys
+import os
+
+sys.path.append('./src/plugin')
+from custom_bn_operator import BlenderNeRF_Operator
+
 
 
 # train and test cameras operator class
-class TrainTestCameras(blender_nerf_operator.BlenderNeRF_Operator):
+class TrainTestCameras(BlenderNeRF_Operator):
     '''Train and Test Cameras Operator'''
     bl_idname = 'object.train_test_cameras'
     bl_label = 'Train and Test Cameras TTC'
@@ -22,7 +27,7 @@ class TrainTestCameras(blender_nerf_operator.BlenderNeRF_Operator):
             return {'FINISHED'}
 
         # if there is an error, print first error message
-        error_messages = self.asserts(scene, method='TTC')
+        error_messages = self.asserts(scene)
         if len(error_messages) > 0:
            self.report({'ERROR'}, error_messages[0])
            print({'ERROR'}, error_messages[0])
@@ -33,10 +38,10 @@ class TrainTestCameras(blender_nerf_operator.BlenderNeRF_Operator):
 
         # clean directory name (unsupported characters replaced) and output path
         output_dir = bpy.path.clean_name(scene.ttc_dataset_name)
-        output_path = os.path.join(scene.save_path, output_dir)
+        output_path = os.path.join(scene.save_path, output_dir) #'../assets/output'#os.path.join(scene.save_path, output_dir)
         os.makedirs(output_path, exist_ok=True)
 
-        if scene.logs: self.save_log_file(scene, output_path, method='TTC')
+        if scene.logs: self.save_log_file(scene, output_path)
 
         # initial properties might have changed since set_init_props update
         scene.init_output_path = scene.render.filepath
@@ -44,12 +49,12 @@ class TrainTestCameras(blender_nerf_operator.BlenderNeRF_Operator):
 
         if scene.test_data:
             # testing transforms
-            output_test_data['frames'] = self.get_camera_extrinsics(scene, test_camera, mode='TEST', method='TTC')
+            output_test_data['frames'] = self.get_camera_extrinsics(scene, test_camera, mode='TEST')
             self.save_json(output_path, 'transforms_test.json', output_test_data)
 
         if scene.train_data:
             # training transforms
-            output_train_data['frames'] = self.get_camera_extrinsics(scene, train_camera, mode='TRAIN', method='TTC')
+            output_train_data['frames'] = self.get_camera_extrinsics(scene, train_camera, mode='TRAIN')
             self.save_json(output_path, 'transforms_train.json', output_train_data)
 
             # rendering
@@ -63,8 +68,10 @@ class TrainTestCameras(blender_nerf_operator.BlenderNeRF_Operator):
 
         # if frames are rendered, the below code is executed by the handler function
         if not any(scene.rendering):
+            output_path = output_path + '/train'
+            zip_file_path = output_path + '.zip'
             # compress dataset and remove folder (only keep zip)
-            shutil.make_archive(output_path, 'zip', output_path) # output filename = output_path
+            shutil.make_archive(output_path, 'zip', output_path) 
             shutil.rmtree(output_path)
 
         return {'FINISHED'}

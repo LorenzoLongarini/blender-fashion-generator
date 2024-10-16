@@ -1,5 +1,10 @@
 venv
+nerfstudio
+blender
 .vscode/*
 !.vscode/.gitkeep
-assets/*
-!assets/.gitkeep
+assets/DeepFashion/*
+assets/output/*
+!assets/DeepFashion/.gitkeep
+!assets/output/.gitkeep
+outputs
