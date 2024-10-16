@@ -1,13 +1,5 @@
 import bpy
 
-<<<<<<< HEAD
-def set_ambient_light():
-    # Access the world settings to set ambient light
-    world = bpy.context.scene.world
-    world.use_nodes = True
-    ambient_light = world.node_tree.nodes.new('ShaderNodeBackground')
-    ambient_light.inputs['Strength'].default_value = 0.5  # Adjust the strength as needed
-=======
 def set_lights():
     # world = bpy.context.scene.world
     # world.use_nodes = True
@@ -61,4 +53,3 @@ def set_lights():
     # faux_name = "tensor_" + str(time.time()) + ".png"
     # fp = os.path.join("/home/zeffii/Desktop", faux_name)
     # bpy.data.images['Render Result'].save_render(filepath=fp)
->>>>>>> 2d41eea0adb5d41c5a4f0d164f79cb3e9ef8e286
