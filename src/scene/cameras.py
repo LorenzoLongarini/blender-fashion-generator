@@ -1,47 +1,48 @@
-import bpy
-from math import radians
 
-def create_camera(target_obj):
+from math import radians
+import bpy 
+from bpy import context
+
+
+def create_camera():
     scn = bpy.context.scene
 
-    # Distanza fissa dalle camere al centro dell'oggetto
-    distance = 5  # Regola questa distanza per una visione migliore dell'oggetto
-
-    # Crea la prima telecamera
+    # create the first camera
     cam1 = bpy.data.cameras.new("Camera 1")
-    cam1.lens = 35  # Lunghezza focale standard
-
-    # Crea il primo oggetto telecamera
+    cam1.lens = 18
+    cam1.type = 'PERSP'
+    # create the first camera object
     cam_obj1 = bpy.data.objects.new("Camera 1", cam1)
-    
-    # Posiziona la telecamera fissa a una distanza fissa
-    cam_obj1.location = (distance, -distance, distance / 2)  # Camera frontale
-    cam_obj1.rotation_euler = (radians(45), 0, radians(45))  # Inclinazione della telecamera
+    # cam_obj1.location = (1.69, -1.85, 1.388)
+    # cam_obj1.rotation_euler = (0.6799, 0, 0.8254)
+    cam_obj1.location = (0.0, 0.0, 1.0)
+    cam_obj1.rotation_euler = (radians(45), 0, 0)
     scn.collection.objects.link(cam_obj1)
 
-    # Fai puntare la telecamera al centro dell'oggetto
-    cam_obj1.constraints.new(type='TRACK_TO')
-    cam_obj1.constraints['Track To'].target = target_obj
-    cam_obj1.constraints['Track To'].track_axis = 'TRACK_NEGATIVE_Z'  # La camera guarda verso -Z
-    cam_obj1.constraints['Track To'].up_axis = 'UP_Y'  # Asse positivo Y verso l'alto
-
-    # Crea la seconda telecamera
+    # create the second camera
     cam2 = bpy.data.cameras.new("Camera 2")
-    cam2.lens = 35  # Lunghezza focale standard
+    cam2.lens = 18
+    cam2.type = 'PERSP'
 
-    # Crea il secondo oggetto telecamera
+    # create the second camera object
     cam_obj2 = bpy.data.objects.new("Camera 2", cam2)
-    
-    # Posiziona la seconda telecamera dall'altro lato, simmetrica alla prima
-    cam_obj2.location = (-distance, distance, distance / 2)  # Camera posteriore
-    cam_obj2.rotation_euler = (radians(45), 0, radians(-45))  # Inclinazione opposta rispetto alla prima
+    # cam_obj2.location = (1.69, 1.85, 1.388)
+    # cam_obj2.rotation_euler = (radians(40.6), radians(-5.5), radians(140))
+    cam_obj1.location = (2.0, 0.0, 1.5)
+    cam_obj1.rotation_euler = (radians(45), radians(90), 0)
     scn.collection.objects.link(cam_obj2)
 
-    # Fai puntare la seconda telecamera al centro dell'oggetto
-    cam_obj2.constraints.new(type='TRACK_TO')
-    cam_obj2.constraints['Track To'].target = target_obj
-    cam_obj2.constraints['Track To'].track_axis = 'TRACK_NEGATIVE_Z'
-    cam_obj2.constraints['Track To'].up_axis = 'UP_Y'
+     # Deselect all objects first
+    bpy.ops.object.select_all(action='DESELECT')
+    
+    # Seleziona entrambe le telecamere
+    cam_obj1.select_set(True)
+    cam_obj2.select_set(True)
 
-    # Imposta la prima telecamera come attiva
-    scn.camera = cam_obj1  # Se vuoi usare la seconda, puoi impostare cam_obj2
+    # Imposta la prima telecamera come attiva (opzionale)
+    # scn.camera = cam_obj1
+
+    # Imposta le telecamere nella scena come train e test
+    scn.camera_train_target = cam_obj1
+    scn.camera_test_target = cam_obj2
+
