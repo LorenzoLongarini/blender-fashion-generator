@@ -1,5 +1,4 @@
 import bpy
-from math import radians
 import sys
 import os
 sys.path.append('./src/scene')
@@ -24,23 +23,29 @@ def unregister():
     try:
         bpy.utils.unregister_class(BlenderNeRF_Operator)
         bpy.utils.unregister_class(TrainTestCameras)
-        print("Unregister Success.")
+        print("Uneregister Success.")
     except RuntimeError as e:
         print(f"Unregister Error: {e}")
 
 def main():
+    
     clean_scene()
 
-    # Imposta l'oggetto nella scena e ottieni l'oggetto creato
-    obj = set_object(FRAMES[0])
+    #set cameras
+    create_camera()
 
-    # Imposta le telecamere e passagli l'oggetto che devono puntare
-    create_camera(obj)
-
-    # Imposta le luci
+    #set ambient lights
     set_lights()
 
+    #set blender obj in scene
+    set_object(FRAMES[0])
+
+    #ttc plugin to create datasets
+    # bpy.ops.object.train_test_cameras()
+
+
 def initialize_scene_properties(scene):
+
     output_path = os.getcwd() + '/assets/output/'
     if not os.path.exists(output_path):
         os.makedirs(output_path)
@@ -51,12 +56,18 @@ def initialize_scene_properties(scene):
     scene.test_data = True
     scene.ttc_dataset_name = "train"
     scene.save_path = output_path
+    # scene.blendernerf_version = "1.0"  
     scene.render_frames = True
     scene.ttc_nb_frames = 75
     scene.frame_start = 1
     scene.frame_end = 75
 
+
+
 initialize_scene_properties(bpy.context.scene)
 unregister()
 register()
 main()
+
+
+
