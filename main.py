@@ -6,9 +6,10 @@ sys.path.append('./src/plugin')
 
 from custom_bn_operator import BlenderNeRF_Operator
 from custom_ttc_operator import TrainTestCameras
-from clear import clean_scene
+from clean import clean_scene
 from b_object import set_object
 from cameras import create_camera
+from lights import set_lights
 
 FRAMES = [75, 135, 200]
 
@@ -33,11 +34,14 @@ def main():
     #set cameras
     create_camera()
 
+    #set ambient lights
+    set_lights()
+
     #set blender obj in scene
     set_object(FRAMES[0])
 
     #ttc plugin to create datasets
-    bpy.ops.object.train_test_cameras()
+    # bpy.ops.object.train_test_cameras()
 
 
 def initialize_scene_properties(scene):

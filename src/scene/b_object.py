@@ -13,6 +13,7 @@ def import_obj(filepath = cwd + '/assets/DeepFashion/1-1/model_cleaned.obj'):
     return obj
    
 def rotate_obj(obj, frame):
+    obj.location = (0, 0, 0)
     obj.rotation_euler = [0, 0, 0]
     obj.keyframe_insert(data_path = 'rotation_euler', frame = 1)
     obj.rotation_euler = [radians(45), radians(45), radians(45)]
