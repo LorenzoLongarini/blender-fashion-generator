@@ -182,13 +182,13 @@ import bpy
 import os
 import math
 
-# Percorso al dataset DeepFashion3D (cartella con i modelli mesh)
-deepfashion3d_path = "D:\\DeepFashion"
-# deepfashion3d_path = "/Users/alerong/Downloads/Computer Graphics/Dataset/filtered_registered_mesh-001"
+# Percorso al dataset DeepFashion3D (cartella con i modelli mesh) (filtered_registered_mesh-001)
+# deepfashion3d_path = "D:\\DeepFashion"
+deepfashion3d_path = "/Users/alerong/Downloads/Computer Graphics/Dataset/filtered_registered_mesh-001"
 
 # Percorso di output per i dataset generati
-output_path = "D:\\DeepFashion\\output"
-# output_path = "/Users/alerong/Downloads/Computer Graphics/output"
+# output_path = "D:\\DeepFashion\\output"
+output_path = "/Users/alerong/Downloads/Computer Graphics/output"
 
 # Numero di variazioni nel numero di immagini renderizzate
 variations = [75, 135, 200]
