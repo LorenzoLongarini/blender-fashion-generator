@@ -1,3 +1,5 @@
+# ref: https://github.com/maximeraafat/BlenderNeRF/blob/main/blender_nerf_operator.py
+
 import os
 import math
 import json

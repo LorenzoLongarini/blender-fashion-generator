@@ -1,6 +1,10 @@
-.venv
-myenv
-.vscode/task.json
-assets/*
-!assets/.gitkeep
-.python-version
+venv
+nerfstudio
+blender
+.vscode/*
+!.vscode/.gitkeep
+assets/DeepFashion/*
+assets/output/*
+!assets/DeepFashion/.gitkeep
+!assets/output/.gitkeep
+outputs

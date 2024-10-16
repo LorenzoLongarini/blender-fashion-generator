@@ -10,10 +10,15 @@ OUTPUT_TRAIN = 'train'
 OUTPUT_TEST = 'test'
 CAMERA_NAME = 'BlenderNeRF Camera'
 
+import os
+cwd = os.getcwd()
+output_path = cwd + '/assets/output/'
+print(output_path)
 
 # blender nerf operator parent class
 class BlenderNeRF_Operator(bpy.types.Operator):
-
+    bl_idname = "object.blender_nerf_operator"
+    bl_label = "BlenderNeRF Operator"
     # camera intrinsics
     def get_camera_intrinsics(self, scene, camera):
         camera_angle_x = camera.data.angle_x
@@ -142,6 +147,9 @@ class BlenderNeRF_Operator(bpy.types.Operator):
             error_messages.append('AABB scale needs to be a power of two!')
 
         if scene.save_path == '':
+            scene.save_path =  output_path
+
+        if scene.save_path == '':
             error_messages.append('Save path cannot be empty!')
 
         return error_messages
@@ -157,7 +165,7 @@ class BlenderNeRF_Operator(bpy.types.Operator):
             'AABB': scene.aabb,
             'Render Frames': scene.render_frames,
             'File Format': 'NeRF' if scene.nerf else 'NGP',
-            'Save Path': scene.save_path,
+            'Save Path': output_path,# scene.save_path,
             'Method': 'TTC'
         }
 
