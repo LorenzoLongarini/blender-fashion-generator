@@ -15,5 +15,6 @@ create_camera()
 
 set_object(FRAMES[0])
 
+ciao
 
 
