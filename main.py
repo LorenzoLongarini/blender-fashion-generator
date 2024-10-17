@@ -29,19 +29,24 @@ def unregister():
 
 def main():
     
+    # Pulisci la scena esistente
     clean_scene()
 
-    #set cameras
-    create_camera()
+    # Imposta le proprietà della scena
+    initialize_scene_properties(bpy.context.scene)
 
-    #set ambient lights
+    # Imposta l'oggetto Blender nella scena e ottieni l'oggetto importato
+    obj = set_object(FRAMES[0])
+
+    # Crea le telecamere e fai in modo che seguano l'oggetto
+    create_camera(obj)
+
+    # Imposta le luci ambientali
     set_lights()
 
-    #set blender obj in scene
-    set_object(FRAMES[0])
 
-    #ttc plugin to create datasets
-    # bpy.ops.object.train_test_cameras()
+    # ttc plugin to create datasets
+    bpy.ops.object.train_test_cameras()
 
 
 def initialize_scene_properties(scene):
