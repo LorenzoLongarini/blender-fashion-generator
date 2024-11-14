@@ -44,8 +44,8 @@ def create_camera(target_object):
     # scn.camera = cam_obj1
 
     # Imposta le telecamere nella scena come train e test
-    scn.camera_train_target = cam_obj1
-    scn.camera_test_target = cam_obj2
+    # scn.camera_train_target = cam_obj1
+    # scn.camera_test_target = cam_obj2
 
     cam1.lens = 50  # Aumenta la lunghezza focale per il zoom (da 18 a 50 mm)
     cam1.type = 'PERSP'
