@@ -11,7 +11,7 @@ from b_object import set_object
 from cameras import create_camera
 from lights import set_lights
 
-FRAMES = [75, 135, 200]
+FRAMES = [75, 135, 300]
 
 # Register classes in Blender
 def register():
@@ -36,7 +36,7 @@ def main():
     initialize_scene_properties(bpy.context.scene)
 
     # Imposta l'oggetto Blender nella scena e ottieni l'oggetto importato
-    obj = set_object(FRAMES[0])
+    obj = set_object(FRAMES[2])
 
     # Crea le telecamere e fai in modo che seguano l'oggetto
     create_camera(obj)
@@ -63,9 +63,9 @@ def initialize_scene_properties(scene):
     scene.save_path = output_path
     # scene.blendernerf_version = "1.0"  
     scene.render_frames = True
-    scene.ttc_nb_frames = 75
+    scene.ttc_nb_frames = 300
     scene.frame_start = 1
-    scene.frame_end = 75
+    scene.frame_end = 300
 
 
 

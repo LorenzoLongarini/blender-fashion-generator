@@ -7,4 +7,6 @@ assets/DeepFashion/*
 assets/output/*
 !assets/DeepFashion/.gitkeep
 !assets/output/.gitkeep
+exports/*
+!exports/.gitkeep
 outputs

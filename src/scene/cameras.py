@@ -52,7 +52,7 @@ def create_camera(target_object):
     cam_obj1 = bpy.data.objects.new("Camera 1", cam1)
 
     # Posizione della prima telecamera
-    cam_obj1.location = Vector((2.0, -2.0, 1.5))  # Posizione iniziale
+    cam_obj1.location = Vector((1.5, -1.5, 1.5))  # Posizione iniziale
     scn.collection.objects.link(cam_obj1)
 
     # Aggiungi un'ulteriore rotazione di 90 gradi attorno all'asse X
@@ -65,7 +65,7 @@ def create_camera(target_object):
     cam_obj2 = bpy.data.objects.new("Camera 2", cam2)
 
     # Posizione della seconda telecamera
-    cam_obj2.location = Vector((-2.0, 2.0, 1.5))  # Posizione iniziale
+    cam_obj2.location = Vector((1.5, 1.0, 1.5))  # Posizione iniziale
     scn.collection.objects.link(cam_obj2)
 
     # Aggiungi un'ulteriore rotazione di 90 gradi attorno all'asse X per la seconda telecamera
