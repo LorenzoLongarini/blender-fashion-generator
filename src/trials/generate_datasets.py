@@ -182,7 +182,7 @@ import bpy
 import os
 import math
 
-# Percorso al dataset DeepFashion3D (cartella con i modelli mesh)
+# Percorso al dataset DeepFashion3D (cartella con i modelli mesh) (filtered_registered_mesh-001)
 # deepfashion3d_path = "D:\\DeepFashion"
 deepfashion3d_path = "/Users/alerong/Downloads/Computer Graphics/Dataset/filtered_registered_mesh-001"
 
