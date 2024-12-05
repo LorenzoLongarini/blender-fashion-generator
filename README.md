@@ -220,3 +220,14 @@ ns-export format --load-config path_config.yml --output-dir exports
 ## 📝 License
 
 This project is released under the **GPL-3.0** license. You can find more details in the [LICENSE](LICENSE) file.
+
+---
+
+## 👥 Authors
+
+This project was collaboratively developed by:
+
+- ![GitHub](https://img.shields.io/badge/-GitHub-181717?logo=github&logoColor=white&style=flat-square) [Lorenzo Longarini](https://github.com/LorenzoLongarini)
+- ![GitHub](https://img.shields.io/badge/-GitHub-181717?logo=github&logoColor=white&style=flat-square) [Alessandro Rongoni](https://github.com/AlessandroRongoni)
+
+Explore our GitHub profiles for more projects and contributions!
