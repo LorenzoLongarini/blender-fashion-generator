@@ -6,7 +6,7 @@ sys.path.append('./src/plugin')
 
 from custom_bn_operator import BlenderNeRF_Operator
 from custom_ttc_operator import TrainTestCameras
-from custom_cos_operator import CameraOnSphere
+#from custom_cos_operator import CameraOnSphere
 from clean import clean_scene
 from b_object import set_object
 from cameras import create_camera
@@ -18,7 +18,7 @@ FRAMES = [75, 230, 200]
 def register():
     bpy.utils.register_class(BlenderNeRF_Operator)
     bpy.utils.register_class(TrainTestCameras)
-    bpy.utils.register_class(CameraOnSphere)
+    # bpy.utils.register_class(CameraOnSphere)
 
 # Unregister classes in Blender
 # def unregister():
@@ -31,7 +31,7 @@ def register():
 
 
 def unregister():
-    for cls in [BlenderNeRF_Operator, TrainTestCameras, CameraOnSphere]:
+    for cls in [BlenderNeRF_Operator, TrainTestCameras]:
         print("types:")
         if hasattr(bpy.types, cls.__name__):
             bpy.utils.unregister_class(cls)
@@ -48,7 +48,7 @@ def main():
     initialize_scene_properties(bpy.context.scene)
 
     # Imposta l'oggetto Blender nella scena e ottieni l'oggetto importato
-    obj = set_object(FRAMES[0], filepath='/assets/DeepFashion/2-1/')
+    obj = set_object(FRAMES[0], filepath='/assets/DeepFashion/1-1/')
 
     # Crea le telecamere e fai in modo che seguano l'oggetto
     create_camera(obj)
@@ -58,13 +58,26 @@ def main():
 
 
     # ttc plugin to create datasets
-    # bpy.ops.object.train_test_cameras()
-    bpy.ops.object.camera_on_sphere()
+    bpy.ops.object.train_test_cameras()
+    # bpy.ops.object.camera_on_sphere()
 
 
 def initialize_scene_properties(scene, ttc=True):
 
     DATASET_NAME = "prova"
+
+
+####### AGGIORNAMENTO #######
+    # Configura le impostazioni di rendering
+    bpy.context.scene.render.engine = 'CYCLES'
+    bpy.context.scene.render.film_transparent = True
+    bpy.context.scene.render.image_settings.file_format = 'PNG'
+    bpy.context.scene.render.image_settings.color_mode = 'RGBA'
+    bpy.context.scene.cycles.samples = 128
+    bpy.context.scene.cycles.use_denoising = True
+    bpy.context.scene.render.resolution_x = 3840
+    bpy.context.scene.render.resolution_y = 2160
+###############################
 
 
     output_path = os.getcwd() + '/assets/output/'
@@ -86,16 +99,10 @@ def initialize_scene_properties(scene, ttc=True):
     scene.frame_start = 1
     scene.frame_end = FRAMES[0]
 
-# if __name__ == "__main__":
-#     # initialize_scene_properties(bpy.context.scene)
-#     unregister()
-#     register()
-#     main()
-
-
-unregister()
-register()
-main()
+if __name__ == "__main__":
+    unregister()
+    register()
+    main()
 
 
 
