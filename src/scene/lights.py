@@ -17,19 +17,21 @@ def set_lights():
 
     bpy.context.scene.render.engine = 'CYCLES'  # Imposta il motore di rendering su 'CYCLES'
 
-    # Aggiunta di una luce solare
-    bpy.ops.object.light_add(type='SUN')
+    # Aggiunta di una luce Sun al centro della scena
+    bpy.ops.object.light_add(type='SUN')  # Aggiunge una luce di tipo Sun
     luce = bpy.context.object
     luce.name = "Luce_Solare"
-
-    # Posizionamento della luce (modifica le coordinate secondo necessità)
-    luce.location = (10, 10, 10)
+    luce.location = (0, 0, 0)  # Posiziona la luce sopra la scena, allineata all'asse Z
+    luce.data.energy = 5  # Intensità della luce (modifica se necessario)
 
     # Ottieni l'oggetto importato dinamicamente
     imported_objects = [obj for obj in bpy.context.scene.objects if obj.select_get()]
     if imported_objects:
         oggetto = imported_objects[0]  # Usa il primo oggetto selezionato
         print(f"Oggetto selezionato: {oggetto.name}")
+
+        # Posiziona la luce sopra l'oggetto
+        luce.location = (oggetto.location.x, oggetto.location.y, 10)
 
         # Calcola la direzione dalla luce all'oggetto
         direzione = oggetto.location - luce.location
@@ -39,3 +41,6 @@ def set_lights():
         luce.rotation_euler = direzione.to_track_quat('Z', 'Y').to_euler()
     else:
         print("Nessun oggetto selezionato nella scena!")
+
+# Chiama la funzione per impostare le luci
+set_lights()

@@ -99,10 +99,10 @@ def initialize_scene_properties(scene, ttc=True):
     scene.frame_start = 1
     scene.frame_end = FRAMES[0]
 
-if __name__ == "__main__":
-    unregister()
-    register()
-    main()
+# if __name__ == "__main__":
+unregister()
+register()
+main()
 
 
 
