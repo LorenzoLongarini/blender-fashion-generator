@@ -1,78 +1,31 @@
-import bpy
-import sys
 import os
-sys.path.append('./src/scene')
-sys.path.append('./src/plugin')
+import subprocess
+from dotenv import load_dotenv
 
-from custom_bn_operator import BlenderNeRF_Operator
-from custom_ttc_operator import TrainTestCameras
-from clean import clean_scene
-from b_object import set_object
-from cameras import create_camera
-from lights import set_lights
+load_dotenv()
 
-FRAMES = [75, 135, 300]
+def add_blender_to_path(blender_path):
+    os.environ["PATH"] = blender_path + os.pathsep + os.environ["PATH"]
 
-# Register classes in Blender
-def register():
-    bpy.utils.register_class(BlenderNeRF_Operator)
-    bpy.utils.register_class(TrainTestCameras)
-
-# Unregister classes in Blender
-def unregister():
+def run_blender_script(script_path, blender_exec="blender"):
     try:
-        bpy.utils.unregister_class(BlenderNeRF_Operator)
-        bpy.utils.unregister_class(TrainTestCameras)
-        print("Uneregister Success.")
-    except RuntimeError as e:
-        print(f"Unregister Error: {e}")
+        command = [
+            blender_exec,
+            "--background",  
+            "--python", script_path  
+        ]
+        subprocess.run(command, check=True)
+        print("Blender executed successfully!")
+    except subprocess.CalledProcessError as e:
+        print(f"Error running Blender: {e}")
+    except FileNotFoundError:
+        print("Blender not found. Check your Blender PATH.")
 
-def main():
+if __name__ == "__main__":
     
-    # Pulisci la scena esistente
-    clean_scene()
+    blender_dir = os.getenv('BLENDER_PATH')
+    blender_script = r"./app.py"
 
-    # Imposta le proprietà della scena
-    initialize_scene_properties(bpy.context.scene)
+    add_blender_to_path(blender_dir)
 
-    # Imposta l'oggetto Blender nella scena e ottieni l'oggetto importato
-    obj = set_object(FRAMES[2])
-
-    # Crea le telecamere e fai in modo che seguano l'oggetto
-    create_camera(obj)
-
-    # Imposta le luci ambientali
-    set_lights()
-
-
-    # ttc plugin to create datasets
-    bpy.ops.object.train_test_cameras()
-
-
-def initialize_scene_properties(scene):
-
-    output_path = os.getcwd() + '/assets/output/'
-    if not os.path.exists(output_path):
-        os.makedirs(output_path)
-
-    scene.aabb = 2  
-    scene.nerf = False
-    scene.train_data = True
-    scene.test_data = True
-    scene.ttc_dataset_name = "train"
-    scene.save_path = output_path
-    # scene.blendernerf_version = "1.0"  
-    scene.render_frames = True
-    scene.ttc_nb_frames = 300
-    scene.frame_start = 1
-    scene.frame_end = 300
-
-
-
-initialize_scene_properties(bpy.context.scene)
-unregister()
-register()
-main()
-
-
-
+    run_blender_script(blender_script)

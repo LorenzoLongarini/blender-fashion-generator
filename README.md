@@ -19,6 +19,8 @@ start with blender:
 `Blender: Run Script`
 
 create nerf venv
+`conda init`
+
 `conda create --name nerfstudio -y python=3.8`
 
 `conda activate nerfstudio`

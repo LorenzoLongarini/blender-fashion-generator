@@ -10,3 +10,4 @@ assets/output/*
 exports/*
 !exports/.gitkeep
 outputs
+.env

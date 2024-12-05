@@ -1,17 +1,14 @@
 import bpy
 
-
 def purge_orphans():
     if bpy.app.version >= (3, 0, 0):
         bpy.ops.outliner.orphans_purge(
             do_local_ids=True, do_linked_ids=True, do_recursive=True
         )
     else:
-        # call purge_orphans() recursively until there are no more orphan data blocks to purge
         result = bpy.ops.outliner.orphans_purge()
         if result.pop() != "CANCELLED":
             purge_orphans()
-
 
 def clean_scene():
     """
