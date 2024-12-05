@@ -60,6 +60,7 @@ def split_transforms_json(
 if __name__ == "__main__":
     # Esempio di utilizzo
     split_transforms_json(
-        "../../assets/output/train/transforms_train.json",
+        "C://Users//lollo//Universita//Progetto//trainCOSNerf//transforms_train.json",
+        # "../../assets/output/train/transforms_train.json",
         val_ratio=0.1  # 10% per validazione
     )
