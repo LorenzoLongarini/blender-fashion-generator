@@ -1,7 +1,11 @@
 import os
 import shutil
 import bpy
-from . import helper, blender_nerf_operator
+import sys
+sys.path.append('./src/plugin')
+
+from custom_bn_operator import BlenderNeRF_Operator
+import helper
 
 
 # global addon script variables
@@ -9,7 +13,7 @@ EMPTY_NAME = 'BlenderNeRF Sphere'
 CAMERA_NAME = 'BlenderNeRF Camera'
 
 # camera on sphere operator class
-class CameraOnSphere(blender_nerf_operator.BlenderNeRF_Operator):
+class CameraOnSphere(BlenderNeRF_Operator):
     '''Camera on Sphere Operator'''
     bl_idname = 'object.camera_on_sphere'
     bl_label = 'Camera on Sphere COS'
@@ -24,7 +28,7 @@ class CameraOnSphere(blender_nerf_operator.BlenderNeRF_Operator):
             return {'FINISHED'}
 
         # if there is an error, print first error message
-        error_messages = self.asserts(scene, method='COS')
+        error_messages = self.asserts(scene)
         if len(error_messages) > 0:
            self.report({'ERROR'}, error_messages[0])
            return {'FINISHED'}
@@ -62,7 +66,7 @@ class CameraOnSphere(blender_nerf_operator.BlenderNeRF_Operator):
             scene.camera = sphere_camera
 
             # training transforms
-            sphere_output_data['frames'] = self.get_camera_extrinsics(scene, sphere_camera, mode='TRAIN', method='COS')
+            sphere_output_data['frames'] = self.get_camera_extrinsics(scene, sphere_camera, mode='TRAIN')
             self.save_json(output_path, 'transforms_train.json', sphere_output_data)
 
             # rendering
