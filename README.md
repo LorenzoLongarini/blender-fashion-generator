@@ -5,7 +5,7 @@
   
   <p>
     <img src="https://img.shields.io/badge/python-3.8-blue.svg" alt="Python">
-    <img src="https://img.shields.io/badge/blender-3.6-orange.svg" alt="Blender">
+    <img src="https://img.shields.io/badge/blender-4.3.0-orange.svg" alt="Blender">
     <img src="https://img.shields.io/badge/nerfstudio-0.3.4-green.svg" alt="Nerfstudio">
     <img src="https://img.shields.io/badge/license-GPL--3.0-red.svg" alt="License">
   </p>
