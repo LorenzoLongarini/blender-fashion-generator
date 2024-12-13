@@ -5,6 +5,8 @@ blender
 !.vscode/.gitkeep
 assets/DeepFashion/*
 assets/output/*
+!exports/.gitkeep
+!outputs/.gitkeep
 !assets/DeepFashion/.gitkeep
 !assets/output/.gitkeep
 exports/*

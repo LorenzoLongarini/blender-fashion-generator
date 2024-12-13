@@ -1,0 +1,14 @@
+{
+    "filepath": "/assets/DeepFashion/1-1/",
+    "ttc": false,
+    "dataset_train": "first",
+    "dataset_test":"first",
+    "aabb":2,
+    "nerf": true,
+    "lights": true,
+    "frames": 100,
+    "seed": 42,
+    "focal": 40.0,
+    "sphere_scale": [0.25, 0.25, 0.25],
+    "sphere_radius": 3   
+}

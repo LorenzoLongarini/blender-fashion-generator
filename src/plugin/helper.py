@@ -74,11 +74,12 @@ def visualize_camera(self, context):
 
 def delete_camera(scene, name):
     objects = bpy.data.objects
-    objects.remove(objects[name], do_unlink=True)
-
-    scene.show_camera = False
-    scene.camera_exists = False
-
+    if name in objects:
+        objects.remove(objects[name], do_unlink=True)
+        scene.show_camera = False
+        scene.camera_exists = False
+    else:
+        print(f"Camera '{name}' not found. Cannot delete.")
     for block in bpy.data.cameras:
         if name in block.name:
             bpy.data.cameras.remove(block)

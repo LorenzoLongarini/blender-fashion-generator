@@ -65,14 +65,16 @@ class TrainTestCameras(BlenderNeRF_Operator):
                 scene.rendering = (False, True, False)
                 scene.frame_end = scene.frame_start + scene.ttc_nb_frames - 1 # update end frame
                 scene.render.filepath = os.path.join(output_train, '') # training frames path
-                bpy.ops.render.render('INVOKE_DEFAULT', animation=True, write_still=True) # render scene
+                # bpy.ops.render.render('INVOKE_DEFAULT', animation=True, write_still=True) # render scene
+                bpy.ops.render.render('EXEC_DEFAULT', animation=True, write_still=True)
+
 
         # if frames are rendered, the below code is executed by the handler function
         if not any(scene.rendering):
             output_path = output_path + '/train'
             zip_file_path = output_path + '.zip'
             # compress dataset and remove folder (only keep zip)
-            shutil.make_archive(output_path, 'zip', output_path) 
-            shutil.rmtree(output_path)
+            # shutil.make_archive(output_path, 'zip', output_path) 
+            # shutil.rmtree(output_path)
 
         return {'FINISHED'}
