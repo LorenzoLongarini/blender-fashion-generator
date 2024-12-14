@@ -227,7 +227,17 @@ This project is released under the **GPL-3.0** license. You can find more detail
 
 This project was collaboratively developed by:
 
-- ![GitHub](https://img.shields.io/badge/-GitHub-181717?logo=github&logoColor=white&style=circle) [Lorenzo Longarini](https://github.com/LorenzoLongarini)
-- ![GitHub](https://img.shields.io/badge/-GitHub-181717?logo=github&logoColor=white&style=circle) [Alessandro Rongoni](https://github.com/AlessandroRongoni)
+## 👥 Authors
+
+<p align="center">
+    <a href="https://github.com/LorenzoLongarini/" style="text-decoration: none; margin: 0 20px;">
+        <img src="https://github.com/LorenzoLongarini.png" alt="Lorenzo Longarini" width="200" 
+             style="border-radius: 50%; border: 3px solid #00ffff; box-shadow: 0 0 8px rgba(0, 255, 255, 0.5); margin-bottom: 10px;">
+    </a>
+    <a href="https://github.com/AlessandroRongoni/" style="text-decoration: none; margin: 0 20px;">
+        <img src="https://github.com/AlessandroRongoni.png" alt="Alessandro Rongoni" width="200" 
+             style="border-radius: 50%; border: 3px solid #00ffff; box-shadow: 0 0 8px rgba(0, 255, 255, 0.5); margin-bottom: 10px;">
+    </a>
+</p>
 
 Explore our GitHub profiles for more projects and contributions!
