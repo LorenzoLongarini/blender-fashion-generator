@@ -231,12 +231,12 @@ This project was collaboratively developed by:
 
 <p align="center">
     <a href="https://github.com/LorenzoLongarini/" style="text-decoration: none; margin: 0 20px;">
-        <img src="https://github.com/LorenzoLongarini.png" alt="Lorenzo Longarini" width="200" 
-             style="border-radius: 50%; border: 3px solid #00ffff; box-shadow: 0 0 8px rgba(0, 255, 255, 0.5); margin-bottom: 10px;">
+        <img src="https://github.com/LorenzoLongarini.png" alt="Lorenzo Longarini" width="200" height="200" 
+             style="border-radius: 50%; margin: 0 20px;">
     </a>
     <a href="https://github.com/AlessandroRongoni/" style="text-decoration: none; margin: 0 20px;">
-        <img src="https://github.com/AlessandroRongoni.png" alt="Alessandro Rongoni" width="200" 
-             style="border-radius: 50%; border: 3px solid #00ffff; box-shadow: 0 0 8px rgba(0, 255, 255, 0.5); margin-bottom: 10px;">
+        <img src="https://github.com/AlessandroRongoni.png" alt="Alessandro Rongoni" width="200" height="200" 
+             style="border-radius: 50%; margin: 0 20px;">
     </a>
 </p>
 
