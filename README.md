@@ -227,8 +227,6 @@ This project is released under the **GPL-3.0** license. You can find more detail
 
 This project was collaboratively developed by:
 
-## 👥 Authors
-
 <p align="center">
     <a href="https://github.com/LorenzoLongarini/" style="text-decoration: none;">
         <img src="https://github.com/LorenzoLongarini.png" alt="Lorenzo Longarini" width="200" height="200" style="border-radius: 50%; margin: 20px;">
