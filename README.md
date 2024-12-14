@@ -230,14 +230,11 @@ This project was collaboratively developed by:
 ## 👥 Authors
 
 <p align="center">
-    <a href="https://github.com/LorenzoLongarini/" style="text-decoration: none; margin: 0 20px;">
-        <img src="https://github.com/LorenzoLongarini.png" alt="Lorenzo Longarini" width="200" height="200" 
-             style="border-radius: 50%; margin: 0 20px;">
+    <a href="https://github.com/LorenzoLongarini/" style="text-decoration: none;">
+        <img src="https://github.com/LorenzoLongarini.png" alt="Lorenzo Longarini" width="200" height="200" style="border-radius: 50%; margin: 20px;">
     </a>
-    <a href="https://github.com/AlessandroRongoni/" style="text-decoration: none; margin: 0 20px;">
-        <img src="https://github.com/AlessandroRongoni.png" alt="Alessandro Rongoni" width="200" height="200" 
-             style="border-radius: 50%; margin: 0 20px;">
+    <a href="https://github.com/AlessandroRongoni/" style="text-decoration: none;">
+        <img src="https://github.com/AlessandroRongoni.png" alt="Alessandro Rongoni" width="200" height="200" style="border-radius: 50%; margin: 20px;">
     </a>
 </p>
-
 Explore our GitHub profiles for more projects and contributions!
