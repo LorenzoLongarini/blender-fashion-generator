@@ -15,17 +15,17 @@ from init_scene import init_bpy_prop
 # load_dotenv()
 
 def set_and_gen(config, output_path):
-    dataset_train = config.get('dataset_train')
-    dataset_test = config.get('dataset_test')
+    train_name = config.get('train_name')
+    test_name = config.get('test_name')
     lights = config.get('lights')
     ttc = config.get('ttc')
     frames = config.get('frames')
-    filepath = config.get('filepath')
+    asset_path = config.get('asset_path')
     hd = config.get("hd")
     focal = config.get('focal')
 
     clean_scene()
-    obj = set_object(frames, filepath=filepath)
+    obj = set_object(frames, filepath=asset_path)
 
     # cos does not need cameras init
     # if ttc:
@@ -38,15 +38,15 @@ def set_and_gen(config, output_path):
     
     # generate dataset twice
     if ttc: 
-        file_zip = gen_dataset(config, f'{dataset_train}', ttc = ttc)
+        file_zip = gen_dataset(config, f'{train_name}', ttc = ttc)
         return file_zip, ''
 
-    train_zip = gen_dataset(config, f'train_{dataset_train}', ttc = ttc, seed = 0)
+    train_zip = gen_dataset(config, f'train_{train_name}', ttc = ttc, seed = 0)
     while(True):
         print(os.listdir(output_path))
         if any(file.endswith('.zip') and 'train' in file for file in os.listdir(output_path)):
             break
-    test_zip = gen_dataset(config, f'test_{dataset_test}', ttc = ttc)
+    test_zip = gen_dataset(config, f'test_{test_name}', ttc = ttc)
     return train_zip, test_zip
 
 def app():  
