@@ -21,18 +21,20 @@ def set_and_gen(config, output_path):
     ttc = config.get('ttc')
     frames = config.get('frames')
     filepath = config.get('filepath')
+    hd = config.get("hd")
+    focal = config.get('focal')
 
     clean_scene()
     obj = set_object(frames, filepath=filepath)
 
     # cos does not need cameras init
     # if ttc:
-    create_camera(obj, ttc)
+    create_camera(obj, ttc, focal = focal)
 
     if lights:
         print("il valore di lights è settato a: ", lights)
         set_lights()
-    init_bpy_prop()
+    init_bpy_prop(hd)
     
     # generate dataset twice
     if ttc: 

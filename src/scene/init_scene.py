@@ -10,9 +10,11 @@ def init_scene_prop(scene, config, dataset_name, ttc=False, seed = None):
     aabb = config.get('aabb')
     nerf = config.get('nerf')
     light = config.get('lights')
+    hd = config.get('hd')
 
-    is_nerf = '_nerf' if nerf else 'ngp'
+    is_nerf = '_nerf' if nerf else '_ngp'
     is_light = '_light' if light else ''
+    is_hd = '_hd' if hd else ''
     
     #create output path
     output_path = os.getcwd() + '/assets/output/'
@@ -29,13 +31,15 @@ def init_scene_prop(scene, config, dataset_name, ttc=False, seed = None):
     scene.save_path = output_path
     scene.render_frames = True
     # scene.blendernerf_version = "1.0"  
+    
+    path = f'{dataset_name}_{frames}F{is_nerf}{is_light}{is_hd}'
 
     if ttc:
-        zip_path = f'TTC_{dataset_name}_{frames}F{is_nerf}{is_light}'
+        zip_path = f'TTC_{path}'
         scene.ttc_dataset_name = zip_path
         scene.ttc_nb_frames = frames
     else:
-        zip_path = f'COS_{dataset_name}_{frames}F{is_nerf}{is_light}'
+        zip_path = f'COS_{path}'
         scene.cos_dataset_name = zip_path
         print("il valore di seed è ", seed)
         scene.seed = seed if seed is not None else config.get('seed')
@@ -46,14 +50,14 @@ def init_scene_prop(scene, config, dataset_name, ttc=False, seed = None):
     
     return zip_path
 
-def init_bpy_prop():
-    bpy.context.scene.render.engine = 'CYCLES'
+def init_bpy_prop(hd):
+    bpy.context.scene.render.engine = 'CYCLES'  
     bpy.context.scene.render.film_transparent = True
     bpy.context.scene.render.image_settings.file_format = 'PNG'
     bpy.context.scene.render.image_settings.color_mode = 'RGBA'
 
-    #remove comment to high resolution
-    # bpy.context.scene.cycles.samples = 128
-    # bpy.context.scene.cycles.use_denoising = True
-    # bpy.context.scene.render.resolution_x = 3840
-    # bpy.context.scene.render.resolution_y = 2160
+    if hd:
+        bpy.context.scene.cycles.samples = 128
+        bpy.context.scene.cycles.use_denoising = True
+        bpy.context.scene.render.resolution_x = 3840
+        bpy.context.scene.render.resolution_y = 2160

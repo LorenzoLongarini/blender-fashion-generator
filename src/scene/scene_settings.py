@@ -50,12 +50,13 @@ def set_lights():
     else:
         print("No object selected!")
 
-def create_camera(target_object, ttc):
+def create_camera(target_object, ttc, focal=None):
+
     scn = bpy.context.scene
 
 
     cam1 = bpy.data.cameras.new("Camera 1")
-    cam1.lens = 50 
+    cam1.lens = focal if focal is not None else 100 
     cam1.type = 'PERSP'
     cam_obj1 = bpy.data.objects.new("Camera 1", cam1)
     cam_obj1.location = Vector((1.5, -1.5, 1.5)) 
