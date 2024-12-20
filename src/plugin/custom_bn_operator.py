@@ -15,7 +15,6 @@ CAMERA_NAME = 'BlenderNeRF Camera'
 
 cwd = os.getcwd()
 output_path = cwd + '/assets/output/'
-print("Creating dataset in:",output_path)
 
 # blender nerf operator parent class
 class BlenderNeRF_Operator(bpy.types.Operator):

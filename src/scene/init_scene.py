@@ -41,7 +41,6 @@ def init_scene_prop(scene, config, dataset_name, ttc=False, seed = None):
     else:
         zip_path = f'COS_{path}'
         scene.cos_dataset_name = zip_path
-        print("il valore di seed è ", seed)
         scene.seed = seed if seed is not None else config.get('seed')
         scene.sphere_scale = sphere_scale
         scene.focal = focal

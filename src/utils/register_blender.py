@@ -7,15 +7,13 @@ from custom_cos_operator import CameraOnSphere
 
 # Register classes in Blender
 def register():
-    x = bpy.utils.register_class(BlenderNeRF_Operator)
-    print(x)
-    y = bpy.utils.register_class(TrainTestCameras)
-    z = bpy.utils.register_class(CameraOnSphere)
-    print(y, z)
+    bpy.utils.register_class(BlenderNeRF_Operator)
+    bpy.utils.register_class(TrainTestCameras)
+    bpy.utils.register_class(CameraOnSphere)
 
 def unregister():
     for cls in [CameraOnSphere, TrainTestCameras, BlenderNeRF_Operator]:
         try:
             bpy.utils.unregister_class(cls)
         except:
-            print('error')
+            print('Error unregister class')

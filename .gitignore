@@ -8,8 +8,10 @@ assets/output/*
 !exports/.gitkeep
 !outputs/.gitkeep
 !assets/DeepFashion/.gitkeep
+!assets/DeepFashion/1-1
 !assets/output/.gitkeep
 exports/*
 !exports/.gitkeep
 outputs
 .env
+.DS_Store

@@ -26,16 +26,23 @@ def set_and_gen(config, output_path):
 
     clean_scene()
     obj = set_object(frames, filepath=asset_path)
-
+    mode = 'TTC' if ttc else 'COS'
     # cos does not need cameras init
     # if ttc:
     create_camera(obj, ttc, focal = focal)
+    print('Script run with config:\n')
+    print("Train Name: ", train_name)
+    print("Test Name: ", test_name)
+    print("Mode: ", mode)
+    print("Lights: ", lights)
+    print("Hd: ", hd)
 
     if lights:
-        print("il valore di lights è settato a: ", lights)
         set_lights()
     init_bpy_prop(hd)
     
+    print('Creating train dataset...')
+
     # generate dataset twice
     if ttc: 
         file_zip = gen_dataset(config, f'{train_name}', ttc = ttc)
@@ -43,9 +50,12 @@ def set_and_gen(config, output_path):
 
     train_zip = gen_dataset(config, f'train_{train_name}', ttc = ttc, seed = 0)
     while(True):
-        print(os.listdir(output_path))
         if any(file.endswith('.zip') and 'train' in file for file in os.listdir(output_path)):
             break
+
+    
+    print('Creating test dataset...')
+    
     test_zip = gen_dataset(config, f'test_{test_name}', ttc = ttc)
     return train_zip, test_zip
 
@@ -61,7 +71,6 @@ def app():
     register()
 
     train_zip, test_zip = set_and_gen(config, output_path)
-    print(train_zip, test_zip)
 
     ttc = config.get('ttc')
     dataset_manager(f'{output_path}/{train_zip}', f'{output_path}/{test_zip}', ttc)

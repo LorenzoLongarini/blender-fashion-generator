@@ -32,7 +32,7 @@ def split_json(input_file, val_ratio = 0.1, seed= 42):
     with open(os.path.join(output_dir, 'transforms_val.json'), 'w') as f:
         json.dump(val_data, f, indent=4)
     
-    print(f"File divisi con successo!")
+    print(f"Train and Val files created!")
     print(f"Training frames: {len(train_frames)}")
     print(f"Validation frames: {len(val_frames)}")
 
@@ -44,10 +44,8 @@ def rename_files(train_path,
                 ):
     
     current_path = os.getcwd()
-    print(current_path)
     output_path = os.path.abspath(os.path.join(current_path, "assets", "output"))
 
-    print(output_path) 
 
     train_folder = os.path.join(output_path, train_path)
     test_folder = os.path.join(output_path, test_path)
@@ -109,8 +107,6 @@ def remove_png(path, ttc):
             json.dump(test_data, file, indent=4)
 
 
-    print(f"Removed .png")
-
 
 def unzip(zip_filepath):
 
@@ -129,7 +125,7 @@ def unzip(zip_filepath):
     return zip_filepath
 
 def dataset_manager(train_zip, test_zip, ttc):
-    print("il valore di ttc è ", ttc)
+    
     unzip(f'{train_zip}.zip')
     if not ttc:
         unzip(f'{test_zip}.zip')

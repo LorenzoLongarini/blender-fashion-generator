@@ -40,8 +40,7 @@ def set_lights():
 
     imported_objects = [obj for obj in bpy.context.scene.objects if obj.select_get()]
     if imported_objects:
-        obj = imported_objects[0]  
-        print(f"Selected object: {obj.name}")
+        obj = imported_objects[0]
 
         light.location = (obj.location.x, obj.location.y, 10)
         direction = obj.location - light.location
@@ -98,7 +97,6 @@ def import_obj(filepath):
 
     bpy.ops.wm.obj_import(filepath=obj_path)
     obj = bpy.context.selected_objects[0]
-    print('Imported name: ', obj.name)
     return obj
 
 def rotate_obj(obj, frame):
@@ -154,7 +152,6 @@ def add_texture(obj, filepath):
         obj.data.materials.append(mat)
 
 def set_object(frame, filepath = '/assets/DeepFashion/1-1/', ttc = True):
-    print(cwd + filepath + 'model_cleaned.obj')
     obj = import_obj(filepath=cwd + filepath)
     add_texture(obj, filepath=cwd + filepath)
 
