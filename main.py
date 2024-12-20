@@ -1,19 +1,31 @@
-import bpy
-# import time
-import sys
-sys.path.append('./src/scene')
-# from src.utils import clear, import_obj, texture, cameras
-from clear import clean_scene
-from b_object import set_object
-from cameras import create_camera
+import os
+import subprocess
+from dotenv import load_dotenv
 
-FRAMES = [75, 135, 200]
+load_dotenv()
 
-clean_scene()
+def add_blender_to_path(blender_path):
+    os.environ["PATH"] = blender_path + os.pathsep + os.environ["PATH"]
 
-create_camera()
+def run_blender_script(script_path, blender_exec="blender"):
+    try:
+        command = [
+            blender_exec,
+            "--background",  
+            "--python", script_path  
+        ]
+        subprocess.run(command, check=True)
+        print("Blender executed successfully!")
+    except subprocess.CalledProcessError as e:
+        print(f"Error running Blender: {e}")
+    except FileNotFoundError:
+        print("Blender not found. Check your Blender PATH.")
 
-set_object(FRAMES[0])
+if __name__ == "__main__":
+    
+    blender_dir = os.getenv('BLENDER_PATH')
+    blender_script = r"./app.py"
 
+    add_blender_to_path(blender_dir)
 
-
+    run_blender_script(blender_script)

@@ -1,8 +1,11 @@
+# ref: https://github.com/maximeraafat/BlenderNeRF/blob/main/blender_nerf_operator.py
+
 import os
 import math
 import json
 import datetime
 import bpy
+import os
 
 
 # global addon script variables
@@ -10,10 +13,14 @@ OUTPUT_TRAIN = 'train'
 OUTPUT_TEST = 'test'
 CAMERA_NAME = 'BlenderNeRF Camera'
 
+cwd = os.getcwd()
+output_path = cwd + '/assets/output/'
+print("Creating dataset in:",output_path)
 
 # blender nerf operator parent class
 class BlenderNeRF_Operator(bpy.types.Operator):
-
+    bl_idname = "object.blender_nerf_operator"
+    bl_label = "BlenderNeRF Operator"
     # camera intrinsics
     def get_camera_intrinsics(self, scene, camera):
         camera_angle_x = camera.data.angle_x
@@ -80,15 +87,11 @@ class BlenderNeRF_Operator(bpy.types.Operator):
         return {'camera_angle_x': camera_angle_x} if scene.nerf else camera_intr_dict
 
     # camera extrinsics (transform matrices)
-    def get_camera_extrinsics(self, scene, camera, mode='TRAIN'):
-        assert mode == 'TRAIN' or mode == 'TEST'
+    def get_camera_extrinsics(self, scene, camera,  mode='TRAIN'):
 
         initFrame = scene.frame_current
         step = scene.frame_step
-        if (mode == 'TRAIN'):
-            end = scene.frame_start + scene.ttc_nb_frames - 1
-        else:
-            end = scene.frame_end
+        end = scene.frame_start + scene.cos_nb_frames - 1
 
         camera_extr_dict = []
         for frame in range(scene.frame_start, end + 1, step):
@@ -103,8 +106,7 @@ class BlenderNeRF_Operator(bpy.types.Operator):
 
             camera_extr_dict.append(frame_data)
 
-        scene.frame_set(initFrame) # set back to initial frame
-
+        scene.frame_set(initFrame) 
         return camera_extr_dict
 
     def save_json(self, directory, filename, data, indent=4):
@@ -123,20 +125,35 @@ class BlenderNeRF_Operator(bpy.types.Operator):
         return matrix_list
 
     # assert messages
-    def asserts(self, scene):
+    def asserts(self, scene, method='SOF'):
+        assert method == 'SOF' or method == 'TTC' or method == 'COS'
 
+        camera = scene.camera
         train_camera = scene.camera_train_target
         test_camera = scene.camera_test_target
 
+        sof_name = scene.sof_dataset_name
         ttc_name = scene.ttc_dataset_name
+        cos_name = scene.cos_dataset_name
 
         error_messages = []
 
-        if  not (train_camera.data.type == 'PERSP' and test_camera.data.type == 'PERSP'):
+        if (method == 'SOF' or method == 'COS') and not camera.data.type == 'PERSP':
+            error_messages.append('Only perspective cameras are supported!')
+
+        if method == 'TTC' and not (train_camera.data.type == 'PERSP' and test_camera.data.type == 'PERSP'):
            error_messages.append('Only perspective cameras are supported!')
 
-        if (ttc_name == ''):
+        if method == 'COS' and CAMERA_NAME in scene.objects.keys():
+            sphere_camera = scene.objects[CAMERA_NAME]
+            if not sphere_camera.data.type == 'PERSP':
+                error_messages.append('BlenderNeRF Camera must remain a perspective camera!')
+
+        if (method == 'SOF' and sof_name == '') or (method == 'TTC' and ttc_name == '') or (method == 'COS' and cos_name == ''):
             error_messages.append('Dataset name cannot be empty!')
+
+        if method == 'COS' and any(x == 0 for x in scene.sphere_scale):
+            error_messages.append('The BlenderNeRF Sphere cannot be flat! Change its scale to be non zero in all axes.')
 
         if not scene.nerf and not self.is_power_of_two(scene.aabb):
             error_messages.append('AABB scale needs to be a power of two!')
@@ -146,7 +163,8 @@ class BlenderNeRF_Operator(bpy.types.Operator):
 
         return error_messages
 
-    def save_log_file(self, scene, directory, ):
+    def save_log_file(self, scene, directory, method='SOF'):
+        assert method == 'SOF' or method == 'TTC' or method == 'COS'
         now = datetime.datetime.now()
 
         logdata = {
@@ -158,12 +176,31 @@ class BlenderNeRF_Operator(bpy.types.Operator):
             'Render Frames': scene.render_frames,
             'File Format': 'NeRF' if scene.nerf else 'NGP',
             'Save Path': scene.save_path,
-            'Method': 'TTC'
+            'Method': method
         }
 
-        logdata['Train Camera Name'] = scene.camera_train_target.name
-        logdata['Test Camera Name'] = scene.camera_test_target.name
-        logdata['Frames'] = scene.ttc_nb_frames
-        logdata['Dataset Name'] = scene.ttc_dataset_name
+        if method == 'SOF':
+            logdata['Frame Step'] = scene.train_frame_steps
+            logdata['Camera'] = scene.camera.name
+            logdata['Dataset Name'] = scene.sof_dataset_name
+
+        elif method == 'TTC':
+            logdata['Train Camera Name'] = scene.camera_train_target.name
+            logdata['Test Camera Name'] = scene.camera_test_target.name
+            logdata['Frames'] = scene.ttc_nb_frames
+            logdata['Dataset Name'] = scene.ttc_dataset_name
+
+        else:
+            logdata['Camera'] = scene.camera.name
+            logdata['Location'] = str(list(scene.sphere_location))
+            logdata['Rotation'] = str(list(scene.sphere_rotation))
+            logdata['Scale'] = str(list(scene.sphere_scale))
+            logdata['Radius'] = scene.sphere_radius
+            logdata['Lens'] = str(scene.focal) + ' mm'
+            logdata['Seed'] = scene.seed
+            logdata['Frames'] = scene.cos_nb_frames
+            logdata['Upper Views'] = scene.upper_views
+            logdata['Outwards'] = scene.outwards
+            logdata['Dataset Name'] = scene.cos_dataset_name
 
         self.save_json(directory, filename='log.txt', data=logdata)
