@@ -220,3 +220,5 @@ ns-export format --load-config path_config.yml --output-dir exports
 ## 📝 License
 
 This project is released under the **GPL-3.0** license. You can find more details in the [LICENSE](LICENSE) file.
+
+ns-eval --load-config=PATH_TO_CONFIG --output-path=output.json

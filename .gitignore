@@ -12,6 +12,8 @@ assets/output/*
 !assets/output/.gitkeep
 exports/*
 !exports/.gitkeep
+results/*
+!results/.gitkeep
 outputs
 .env
 .DS_Store
