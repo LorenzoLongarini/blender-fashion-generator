@@ -189,6 +189,28 @@ pip install nerfstudio
 
 ---
 
+## Configuration Settings
+
+The following table describes the settings from the `config.json` file:
+
+| Key             | Description                                        | Possible Values                              |
+| --------------- | -------------------------------------------------- | -------------------------------------------- |
+| `asset_path`    | Path to the dataset assets.                        | String (e.g., `/assets/DeepFashion/3-1/`)    |
+| `ttc`           | Indicates if Train-Test Camera (TTC) is used.      | `true`, `false`                              |
+| `train_name`    | Name of the training dataset.                      | String (e.g., `3-1`)                         |
+| `test_name`     | Name of the test dataset.                          | String (e.g., `3-1`)                         |
+| `aabb`          | Axis-aligned bounding box value for rendering.     | Integer (e.g., `2`)                          |
+| `nerf`          | Specifies if NeRF model is used.                   | `true`, `false`                              |
+| `frames`        | Number of frames to render.                        | Integer (e.g., `200`)                        |
+| `focal`         | Focal length of the camera.                        | Float (e.g., `35.0`)                         |
+| `sphere_scale`  | Scale of the sphere for rendering.                 | Array of floats (e.g., `[0.25, 0.25, 0.25]`) |
+| `sphere_radius` | Radius of the sphere for rendering.                | Integer (e.g., `3`)                          |
+| `lights`        | Indicates if lights are enabled during rendering.  | `true`, `false`                              |
+| `hd`            | Specifies if high-definition rendering is enabled. | `true`, `false`                              |
+| `seed`          | Random seed for reproducibility.                   | Integer (e.g., `42`)                         |
+
+---
+
 ## 🎓 Model Training
 
 ### Basic Training
@@ -215,10 +237,31 @@ ns-train nerfacto --data path/train --pipeline.model.predict-normals True --load
 ns-export format --load-config path_config.yml --output-dir exports
 ```
 
+### Model Eval
+
+```bash
+ns-eval --load-config=PATH_TO_CONFIG --output-path=output.json
+```
+
 ---
 
 ## 📝 License
 
 This project is released under the **GPL-3.0** license. You can find more details in the [LICENSE](LICENSE) file.
 
-ns-eval --load-config=PATH_TO_CONFIG --output-path=output.json
+---
+
+## 👥 Authors
+
+This project was collaboratively developed by:
+
+<p align="center">
+    <a href="https://github.com/LorenzoLongarini/" style="text-decoration: none;">
+        <img src="https://github.com/LorenzoLongarini.png" alt="Lorenzo Longarini" width="200" height="200" style="border-radius: 50%; margin: 20px;">
+    </a>
+    <a href="https://github.com/AlessandroRongoni/" style="text-decoration: none;">
+        <img src="https://github.com/AlessandroRongoni.png" alt="Alessandro Rongoni" width="200" height="200" style="border-radius: 50%; margin: 20px;">
+    </a>
+</p>
+
+Explore our GitHub profiles for more projects and contributions!
