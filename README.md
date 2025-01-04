@@ -48,7 +48,6 @@ Our project is built upon two main components:
 
 The **Camera On Sphere (COS)** approach extends the original implementation with the following features:
 
-- **Customizable backgrounds**: Ability to generate images with transparent or white backgrounds.
 - **Automated dataset generation**: Automatic splitting into _train_, _validation_, and _test_ sets.
 - **Realistic sunlight illumination**: Optimized configurations to ensure realistic lighting effects.
 - **Camera position optimization**: Automatic positioning of the camera on the sphere for uniform object coverage.
@@ -72,10 +71,10 @@ The **Train Test Cameras (TTC)** approach introduces advanced configurations for
 
 ## 🆚 Differences with Instant NGP and Nerfacto
 
-| Approach | Direct Compatibility     | Pre-Processing Required | Background Support   | Realistic Lighting | Structured Dataset |
-| -------- | ------------------------ | ----------------------- | -------------------- | ------------------ | ------------------ |
-| **COS**  | ✅ Instant NGP, Nerfacto | ✅ No pre-processing    | ✅ Transparent/White | ✅                 | ✅                 |
-| **TTC**  | ✅ Instant NGP, Nerfacto | ❌ COLMAP required      | ✅ Transparent/White | ✅                 | ✅                 |
+| Approach | Direct Compatibility     | Pre-Processing Required | Background Support | Realistic Lighting | Structured Dataset |
+| -------- | ------------------------ | ----------------------- | ------------------ | ------------------ | ------------------ |
+| **COS**  | ✅ Instant NGP, Nerfacto | ✅ No pre-processing    | ✅ Transparent     | ✅                 | ✅                 |
+| **TTC**  | ✅ Instant NGP, Nerfacto | ❌ COLMAP required      | ✅ Transparent     | ✅                 | ✅                 |
 
 ---
 
