@@ -180,10 +180,10 @@ For advanced users, the CLI offers complete control and flexibility for automati
 
 - When running the final training with **Nerfacto**, use the `--skip-colmap` flag to bypass feature extraction and mapping. Ensure the dataset directory is properly prepared with the required files.
 
-#### **Important Notes**:
-
-- **Dataset Preparation**: Make sure the `COLMAP` directory contains the exported **Sparse** and **Dense** models, as well as the `database.db` generated during the process.
-- **Training Command**: When running the final training process with Nerfacto, always include the `--skip-colmap` flag to ensure proper integration with the pre-generated COLMAP outputs.
+> ### **Important Notes**:
+>
+> - **Dataset Preparation**: Make sure the `COLMAP` directory contains the exported **Sparse** and **Dense** models, as well as the `database.db` generated during the process.
+> - **Training Command**: When running the final training process with Nerfacto, always include the `--skip-colmap` flag to ensure proper integration with the pre-generated COLMAP outputs.
 
 ---
 
