@@ -201,7 +201,7 @@ Choose the method that best suits your workflow and technical expertise.
 
 ## 🚀 Getting Started
 
-### Virtual Environment for Blender
+<!-- ### Virtual Environment for Blender
 
 1. **Create a virtual environment:**
 
@@ -221,7 +221,7 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
----
+--- -->
 
 ### Configuration in VSCode
 
