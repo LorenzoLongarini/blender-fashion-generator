@@ -203,8 +203,9 @@ The following table describes the settings from the `config.json` file:
 | `nerf`          | Specifies if NeRF model is used. If `false`, Instant NGP is used with its specific configurations. | `true`, `false`                              |
 | `frames`        | Number of frames to render.                                                                        | Integer (e.g., `200`)                        |
 | `focal`         | Focal length of the camera.                                                                        | Float (e.g., `35.0`)                         |
-| `sphere_scale`  | Scale of the sphere for rendering.                                                                 | Array of floats (e.g., `[0.25, 0.25, 0.25]`) |
-| `sphere_radius` | Radius of the sphere for rendering.                                                                | Integer (e.g., `3`)                          |
+| `sphere_scale`  | Scale of the sphere for rendering. Works only in COS mode.                                         | Array of floats (e.g., `[0.25, 0.25, 0.25]`) |
+| `sphere_radius` | Radius of the sphere for rendering. Works only in COS mode.                                        | Integer (e.g., `3`)                          |
+| `cam_location`  | Describe the position of the camera. Works only in TTC Mode.                                       | Array of floats (e.g., `[1.5, -1.5, 1.5]`)   |
 | `lights`        | Indicates if lights are enabled during rendering.                                                  | `true`, `false`                              |
 | `hd`            | Specifies if high-definition rendering is enabled.                                                 | `true`, `false`                              |
 | `seed`          | Random seed for reproducibility. Works only in COS mode.                                           | Integer (e.g., `42`)                         |
