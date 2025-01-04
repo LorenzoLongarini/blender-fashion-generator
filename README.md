@@ -48,7 +48,6 @@ Our project is built upon two main components:
 
 The **Camera On Sphere (COS)** approach extends the original implementation with the following features:
 
-- **Customizable backgrounds**: Ability to generate images with transparent or white backgrounds.
 - **Automated dataset generation**: Automatic splitting into _train_, _validation_, and _test_ sets.
 - **Realistic sunlight illumination**: Optimized configurations to ensure realistic lighting effects.
 - **Camera position optimization**: Automatic positioning of the camera on the sphere for uniform object coverage.
@@ -72,10 +71,10 @@ The **Train Test Cameras (TTC)** approach introduces advanced configurations for
 
 ## 🆚 Differences with Instant NGP and Nerfacto
 
-| Approach | Direct Compatibility     | Pre-Processing Required | Background Support   | Realistic Lighting | Structured Dataset |
-| -------- | ------------------------ | ----------------------- | -------------------- | ------------------ | ------------------ |
-| **COS**  | ✅ Instant NGP, Nerfacto | ✅ No pre-processing    | ✅ Transparent/White | ✅                 | ✅                 |
-| **TTC**  | ✅ Instant NGP, Nerfacto | ❌ COLMAP required      | ✅ Transparent/White | ✅                 | ✅                 |
+| Approach | Direct Compatibility     | Pre-Processing Required | Background Support | Realistic Lighting | Structured Dataset |
+| -------- | ------------------------ | ----------------------- | ------------------ | ------------------ | ------------------ |
+| **COS**  | ✅ Instant NGP, Nerfacto | ✅ No pre-processing    | ✅ Transparent     | ✅                 | ✅                 |
+| **TTC**  | ✅ Instant NGP, Nerfacto | ❌ COLMAP required      | ✅ Transparent     | ✅                 | ✅                 |
 
 ---
 
@@ -88,41 +87,134 @@ The **Train Test Cameras (TTC)** approach introduces advanced configurations for
 
 ### For TTC:
 
-1. **Install COLMAP**:
+#### 1. **Install COLMAP**:
 
-   - **Linux**:
+- **Linux**:
 
-   ```bash
-    conda install -c conda-forge colmap
-   ```
+  ```bash
+  conda install -c conda-forge colmap
+  ```
 
-   or:
+  or:
 
-   ```bash
-    sudo apt install colmap
-   ```
+  ```bash
+  sudo apt install colmap
+  ```
 
-   - **Windows**:
-     - Download the latest version from [COLMAP Releases](https://github.com/colmap/colmap/releases).
-     - Extract the files and add the `bin` folder to the system's environment variables.
+- **Windows**:
+  - Download the latest version from [COLMAP Releases](https://github.com/colmap/colmap/releases).
+  - Extract the files and add the `bin` folder to the system's environment variables.
 
-2. **Generate data with COLMAP**:
+---
 
-   ```bash
-   colmap feature_extractor --database_path <path_to_database> --image_path <path_to_images>
-   ```
+#### 2. **Using COLMAP**:
 
-   ```bash
-   colmap mapper --database_path <path_to_database> --image_path <path_to_images> --output_path <path_to_output>
-   ```
+We recommend using the **Graphical User Interface (GUI)** version of COLMAP for most users, as it provides a more intuitive and user-friendly experience. Below are instructions for both the **GUI** and **Command Line Interface (CLI)** methods, with a focus on integrating COLMAP with the TTC dataset structure.
 
-3. **Proceed with training using Instant NGP or Nerfacto.**
+---
+
+##### **A. Graphical User Interface (GUI)** (Recommended)
+
+The GUI mode simplifies the process and is ideal for most users. Here’s how to use it:
+
+1. **Open COLMAP**:
+
+   - Launch COLMAP by double-clicking the executable file (on Windows) or running `colmap gui` (on Linux).
+
+2. **Automatic Reconstruction**:
+
+   - Navigate to **"Reconstruction" > "Automatic Reconstruction"**.
+   - Select:
+     - **Workspace**: The folder containing your TTC dataset.
+     - **Image folder**: The folder with the images to process.
+   - COLMAP will automatically handle the feature extraction, mapping, and dense reconstruction.
+
+---
+
+##### **B. Command Line Interface (CLI)**
+
+For advanced users, the CLI offers complete control and flexibility for automation. Below is the complete workflow using only the terminal:
+
+1. **Generate Data with COLMAP**:
+
+   - Run the following commands to extract features, create the map, and reconstruct dense models:
+
+     ```bash
+     colmap feature_extractor --database_path <path_to_database> --image_path <path_to_images>
+     ```
+
+     ```bash
+     colmap mapper --database_path <path_to_database> --image_path <path_to_images> --output_path <path_to_output>
+     ```
+
+     ```bash
+     colmap stereo --workspace_path <path_to_output> --workspace_format COLMAP --Dense_folder DENSE
+     ```
+
+     ```bash
+     colmap model_converter --input_path <path_to_output>/sparse/0 --output_path <path_to_output>/text --output_type TXT
+     ```
+
+---
+
+#### **Processing images**:
+
+- Ensure the generated **Sparse** and **Dense** folders, as well as the **database.db**, are correctly placed in the TTC dataset structure as follows:
+
+```plaintext
+  TTC Dataset/
+  ├── COLMAP/
+  │   ├── SPARSE/
+  │   └── DENSE/
+  ├── database.db
+  └── train/ (folder containing the object photos)
+```
+
+Then run the following command:
+
+```bash
+ns-process-data images --data {DATA_PATH} --output-dir {PROCESSED_DATA_DIR} --skip-colmap
+```
+
+#### **Final Dataset Structure**:
+
+```plaintext
+TTC Dataset/
+├── COLMAP/
+│   ├── SPARSE/
+│   └── DENSE/
+├── transform.json (generated using the `--skip-colmap` flag)
+├── database.db
+├── images/ (folders generated by commands with `--skip-colmap`)
+├── images_2/
+├── images_4/
+├── images_8/
+└── train/ (folder containing the object photos)
+```
+
+> ### **Important Notes**:
+>
+> - **Dataset Preparation**: Make sure the `COLMAP` directory contains the exported **Sparse** and **Dense** models, as well as the `database.db` generated during the process.
+> - **Training Command**: When running the images processing with Nerfstudio, always include the `--skip-colmap` flag to ensure proper integration with the pre-generated COLMAP outputs.
+
+---
+
+#### **Comparison of CLI and GUI**:
+
+| Feature            | CLI                                  | GUI                     |
+| ------------------ | ------------------------------------ | ----------------------- |
+| **Ease of Use**    | Requires familiarity with commands   | User-friendly interface |
+| **Automation**     | Suitable for scripting and pipelines | Manual, interactive     |
+| **Flexibility**    | Highly customizable                  | Limited to UI options   |
+| **Learning Curve** | Steeper                              | Beginner-friendly       |
+
+Choose the method that best suits your workflow and technical expertise.
 
 ---
 
 ## 🚀 Getting Started
 
-### Virtual Environment for Blender
+<!-- ### Virtual Environment for Blender
 
 1. **Create a virtual environment:**
 
@@ -142,7 +234,7 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
----
+--- -->
 
 ### Configuration in VSCode
 
@@ -193,39 +285,50 @@ pip install nerfstudio
 
 The following table describes the settings from the `config.json` file:
 
-| Key             | Description                                        | Possible Values                              |
-| --------------- | -------------------------------------------------- | -------------------------------------------- |
-| `asset_path`    | Path to the dataset assets.                        | String (e.g., `/assets/DeepFashion/3-1/`)    |
-| `ttc`           | Indicates if Train-Test Camera (TTC) is used.      | `true`, `false`                              |
-| `train_name`    | Name of the training dataset.                      | String (e.g., `3-1`)                         |
-| `test_name`     | Name of the test dataset.                          | String (e.g., `3-1`)                         |
-| `aabb`          | Axis-aligned bounding box value for rendering.     | Integer (e.g., `2`)                          |
-| `nerf`          | Specifies if NeRF model is used.                   | `true`, `false`                              |
-| `frames`        | Number of frames to render.                        | Integer (e.g., `200`)                        |
-| `focal`         | Focal length of the camera.                        | Float (e.g., `35.0`)                         |
-| `sphere_scale`  | Scale of the sphere for rendering.                 | Array of floats (e.g., `[0.25, 0.25, 0.25]`) |
-| `sphere_radius` | Radius of the sphere for rendering.                | Integer (e.g., `3`)                          |
-| `lights`        | Indicates if lights are enabled during rendering.  | `true`, `false`                              |
-| `hd`            | Specifies if high-definition rendering is enabled. | `true`, `false`                              |
-| `seed`          | Random seed for reproducibility.                   | Integer (e.g., `42`)                         |
+| Key             | Description                                                                                        | Possible Values                              |
+| --------------- | -------------------------------------------------------------------------------------------------- | -------------------------------------------- |
+| `asset_path`    | Path to the dataset assets.                                                                        | String (e.g., `/assets/DeepFashion/3-1/`)    |
+| `ttc`           | Specifies the method used: Train-Test Camera (TTC) or Camera On Sphere (COS).                      | `true` (TTC), `false` (COS)                  |
+| `train_name`    | Name of the training dataset. Can be defined by the user.                                          | String (e.g., `3-1`)                         |
+| `test_name`     | Name of the test dataset. Can be defined by the user.                                              | String (e.g., `3-1`)                         |
+| `aabb`          | Axis-aligned bounding box value for rendering.                                                     | Integer (range: `1-4`, e.g., `2`)            |
+| `nerf`          | Specifies if NeRF model is used. If `false`, Instant NGP is used with its specific configurations. | `true`, `false`                              |
+| `frames`        | Number of frames to render.                                                                        | Integer (e.g., `200`)                        |
+| `focal`         | Focal length of the camera.                                                                        | Float (e.g., `35.0`)                         |
+| `sphere_scale`  | Scale of the sphere for rendering. Works only in COS mode.                                         | Array of floats (e.g., `[0.25, 0.25, 0.25]`) |
+| `sphere_radius` | Radius of the sphere for rendering. Works only in COS mode.                                        | Integer (e.g., `3`)                          |
+| `cam_location`  | Describe the position of the camera. Works only in TTC Mode.                                       | Array of floats (e.g., `[1.5, -1.5, 1.5]`)   |
+| `lights`        | Indicates if lights are enabled during rendering.                                                  | `true`, `false`                              |
+| `hd`            | Specifies if high-definition rendering is enabled.                                                 | `true`, `false`                              |
+| `seed`          | Random seed for reproducibility. Works only in COS mode.                                           | Integer (e.g., `42`)                         |
 
 ---
 
 ## 🎓 Model Training
 
-### Basic Training
+### Training with Normal Prediction
+
+#### TTC:
 
 ```bash
-ns-train nerfacto --data path/to/data blender-data
+ns-train nerfacto --data path/train --pipeline.model.predict-normals True
 ```
 
-### Training with Normal Prediction
+#### COS:
 
 ```bash
 ns-train nerfacto --data path/train --pipeline.model.predict-normals True blender-data
 ```
 
 ### Resuming Training from Checkpoint
+
+#### TTC:
+
+```bash
+ns-train nerfacto --data path/train --pipeline.model.predict-normals True --load-dir path/outputs/train/nerfacto/YYYY-MM-DD/nerfstudio_models
+```
+
+#### COS:
 
 ```bash
 ns-train nerfacto --data path/train --pipeline.model.predict-normals True --load-dir path/outputs/train/nerfacto/YYYY-MM-DD/nerfstudio_models blender-data
@@ -242,6 +345,42 @@ ns-export format --load-config path_config.yml --output-dir exports
 ```bash
 ns-eval --load-config=PATH_TO_CONFIG --output-path=output.json
 ```
+
+---
+
+#### **Evaluation Results**:
+
+The evaluation results for the experiment **`example`** using the method **`nerfacto`** are structured as follows:
+
+```json
+{
+  "experiment_name": "example",
+  "method_name": "nerfacto",
+  "checkpoint": "last_checkpoint",
+  "results": {
+    "psnr": 28.3405,
+    "psnr_std": 5.1303,
+    "ssim": 0.9411,
+    "ssim_std": 0.0367,
+    "lpips": 0.055,
+    "lpips_std": 0.0504,
+    "num_rays_per_sec": 240763.3594,
+    "num_rays_per_sec_std": 21055.502,
+    "fps": 0.4644,
+    "fps_std": 0.0406
+  }
+}
+```
+
+**Explanation of Metrics**:
+
+- **PSNR (Peak Signal-to-Noise Ratio)**: Measures the quality of the reconstructed images. Higher values indicate better quality. **(Key Metric)**
+- **SSIM (Structural Similarity Index)**: Evaluates structural similarity between the ground truth and reconstructed images. Closer to 1 means better similarity. **(Key Metric)**
+- **LPIPS (Learned Perceptual Image Patch Similarity)**: Assesses perceptual similarity; lower values indicate higher perceptual similarity. **(Key Metric)**
+- **Rays Processed per Second**: Measures processing speed in terms of rays handled per second. Higher values indicate better performance.
+- **FPS (Frames per Second)**: Reflects rendering speed. Higher values suggest more efficient rendering.
+
+---
 
 ---
 
