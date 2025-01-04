@@ -340,15 +340,14 @@ ns-train nerfacto --data path/train --pipeline.model.predict-normals True --load
 ns-export format --load-config path_config.yml --output-dir exports
 ```
 
+If you prefer to crop your object, you can use the export feature from Nerfstudio Viser:
+
+![export.gif](./assets/doc/export.gif)
 ### Model Eval
 
 ```bash
 ns-eval --load-config=PATH_TO_CONFIG --output-path=output.json
 ```
-
-If you prefer to crop your object, you can use the export feature from Nerfstudio Viser:
-
-![export.gif](./assets/doc/export.gif)
 
 ---
 
