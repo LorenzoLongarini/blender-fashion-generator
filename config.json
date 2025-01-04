@@ -1,14 +1,15 @@
 {
-    "asset_path": "/assets/DeepFashion/3-1/",
+    "asset_path": "/assets/DeepFashion/278-1/",
     "ttc": false,
-    "train_name": "3-1",
-    "test_name":"3-1",
+    "train_name": "278-1",
+    "test_name":"278-1",
     "aabb":2,
     "nerf": true,
     "frames": 200,
     "focal": 35.0,
     "sphere_scale": [0.25, 0.25, 0.25],
     "sphere_radius": 3,   
+    "cam_location": [1.5, -1.5, 1.5],
     "lights": true,
     "hd":true,
     "seed": 42

@@ -23,13 +23,13 @@ def set_and_gen(config, output_path):
     asset_path = config.get('asset_path')
     hd = config.get("hd")
     focal = config.get('focal')
-
+    cam_location = config.get('cam_location')
     clean_scene()
     obj = set_object(frames, filepath=asset_path)
     mode = 'TTC' if ttc else 'COS'
     # cos does not need cameras init
     # if ttc:
-    create_camera(obj, ttc, focal = focal)
+    create_camera(obj, ttc, focal = focal, cam_location= cam_location)
     print('Script run with config:\n')
     print("Train Name: ", train_name)
     print("Test Name: ", test_name)

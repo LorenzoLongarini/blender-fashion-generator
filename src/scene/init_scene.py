@@ -9,6 +9,7 @@ def init_scene_prop(scene, config, dataset_name, ttc=False, seed = None):
     sphere_radius = config.get('sphere_radius')
     aabb = config.get('aabb')
     nerf = config.get('nerf')
+    # splats = config.get('splats')
     light = config.get('lights')
     hd = config.get('hd')
 
@@ -30,6 +31,7 @@ def init_scene_prop(scene, config, dataset_name, ttc=False, seed = None):
     scene.frame_end = frames
     scene.save_path = output_path
     scene.render_frames = True
+    # scene.splats = splats
     # scene.blendernerf_version = "1.0"  
     
     path = f'{dataset_name}_{frames}F{is_nerf}{is_light}{is_hd}'
