@@ -348,6 +348,42 @@ ns-eval --load-config=PATH_TO_CONFIG --output-path=output.json
 
 ---
 
+#### **Evaluation Results**:
+
+The evaluation results for the experiment **`example`** using the method **`nerfacto`** are structured as follows:
+
+```json
+{
+  "experiment_name": "example",
+  "method_name": "nerfacto",
+  "checkpoint": "last_checkpoint",
+  "results": {
+    "psnr": 28.3405,
+    "psnr_std": 5.1303,
+    "ssim": 0.9411,
+    "ssim_std": 0.0367,
+    "lpips": 0.055,
+    "lpips_std": 0.0504,
+    "num_rays_per_sec": 240763.3594,
+    "num_rays_per_sec_std": 21055.502,
+    "fps": 0.4644,
+    "fps_std": 0.0406
+  }
+}
+```
+
+**Explanation of Metrics**:
+
+- **PSNR (Peak Signal-to-Noise Ratio)**: Measures the quality of the reconstructed images. Higher values indicate better quality. **(Key Metric)**
+- **SSIM (Structural Similarity Index)**: Evaluates structural similarity between the ground truth and reconstructed images. Closer to 1 means better similarity. **(Key Metric)**
+- **LPIPS (Learned Perceptual Image Patch Similarity)**: Assesses perceptual similarity; lower values indicate higher perceptual similarity. **(Key Metric)**
+- **Rays Processed per Second**: Measures processing speed in terms of rays handled per second. Higher values indicate better performance.
+- **FPS (Frames per Second)**: Reflects rendering speed. Higher values suggest more efficient rendering.
+
+---
+
+---
+
 ## 📝 License
 
 This project is released under the **GPL-3.0** license. You can find more details in the [LICENSE](LICENSE) file.
