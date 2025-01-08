@@ -13,7 +13,7 @@
 
 ---
 
-## 🎯 Project Objectives
+## 🎯 Project Goals
 
 This project aims to explore the potential of **Neural Radiance Fields (NeRFs)** and **3D Gaussian Splatting (3DGS)** techniques for reconstructing three-dimensional scenes from 2D images. The main objectives include:
 
